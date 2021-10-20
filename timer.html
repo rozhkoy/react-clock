@@ -12,6 +12,11 @@
 <body>
     <div class="wrap">
         <div class="timer">
+            <div class="accordion">
+                <button class="timer__button accordion__button accordion__button--active">TIMER</button>
+                <button class="timer__button accordion__button accordion__button--center">STOPWATCH</button>
+                <button class="timer__button accordion__button">CLOCK</button>
+            </div>
             <div class="timer__section-group">
                 <div class="timer__section-item">
                     <button class="timer__button button__plus"><img src="arrow.svg" alt=""></button>
@@ -20,7 +25,7 @@
                     <button class="timer__button button__minus"><img src="arrow.svg" alt=""></button>
                 </div>
 
-                <span class="colon">:</span>
+                <span class="timer-colon">:</span>
 
                 <div class="timer__section-item">
                     <button class=" timer__button button__plus"><img src="arrow.svg" alt=""></button>
@@ -29,7 +34,7 @@
                     <button class=" timer__button button__minus"><img src="arrow.svg" alt=""></button>
                 </div>
 
-                <span class="colon">:</span>
+                <span class="timer-colon">:</span>
 
                 <div class="timer__section-item">
                     <button class=" timer__button button__plus"><img src="arrow.svg" alt=""></button>
@@ -39,16 +44,16 @@
                 </div>
 
             </div>
-
-
-            <div class="button__group">
+            <div class="timer-button__group">
                 <button class="timer__button timer__button--start">Start</button>
                 <button class="timer__button timer__button--stop">Stop</button>
                 <button class="timer__button timer__button--reset">Reset</button>
             </div>
-
-
-
+        </div>
+        <div class="popup">
+            <p class="popup__text">
+                Please change time
+            </p>
         </div>
     </div>
 </body>
