@@ -178,7 +178,7 @@ body {
 }
 
 .tabs__button {
-    padding: 20px;
+    padding: 20px 0;
     /* background: #b6b6b6ff; */
     font-size: 20px;
     border-bottom: 2px solid #fff;
@@ -269,6 +269,9 @@ body {
     .number__desription {
         font-size: 21px;
     }
+    .clock__section-group {
+        padding: 70px 30px;
+    }
 }
 
 @media (max-width: 460px) {
@@ -287,6 +290,33 @@ body {
     .stop-watch-button__group {
         grid-template-columns: repeat(2, 1fr);
     }
+    .timer__button--one {
+        border: 0;
+        border: 2px solid #0e0e0e;
+    }
+    .timer__button--two {
+        border: 0;
+        border-right: 2px solid #0e0e0e;
+        border-top: 2px solid #0e0e0e;
+        border-bottom: 2px solid #0e0e0e;
+    }
+    .timer__button--four {
+        border: 0;
+        border-right: 2px solid #0e0e0e;
+        border-bottom: 2px solid #0e0e0e;
+    }
+    .timer__button--three {
+        border: 0;
+        border-right: 2px solid #0e0e0e;
+        border-bottom: 2px solid #0e0e0e;
+        border-left: 2px solid #0e0e0e;
+    }
+    .clock__section-item {
+        font-size: 60px;
+    }
+    .clock-colon {
+        font-size: 53px;
+    }
 }
 
 @media (max-width: 375px) {
@@ -294,9 +324,8 @@ body {
         font-size: 60px;
     }
     .tabs__button {
-        font-size: 18px;
-        padding: 15px;
-        border-bottom: 2px solid #fff;
+        font-size: 16px;
+        padding: 15px 0;
     }
     .timer-colon {
         font-size: 53px;
@@ -306,5 +335,8 @@ body {
     }
     .stop-watch-colon {
         font-size: 34px;
+    }
+    .clock__section-group {
+        padding: 70px 15px;
     }
 }
