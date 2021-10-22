@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="timer">
+            <div class="tabs">
+                <button class="timer__button tabs__button ">TIMER</button>
+                <button class="timer__button tabs__button tabs__button--center tabs__button--active">STOPWATCH</button>
+                <button class="timer__button tabs__button">CLOCK</button>
+            </div>
+            <div class="wrap-stop-watch">
+                <div class="stop-watch__section-group">
+                    <div class="stop-watch__section-item">
+                        <span class="numer__item">00</span>
+                        <span class="number__desription">Hrs</span>
+                    </div>
+                    <span class="stop-watch-colon">:</span>
+
+                    <div class="stop-watch__section-item">
+                        <span class="numer__item">00</span>
+                        <span class="number__desription">Min</span>
+                    </div>
+                    <span class="stop-watch-colon">:</span>
+
+                    <div class="stop-watch__section-item">
+                        <span class="numer__item">00</span>
+                        <span class="number__desription">Sec</span>
+                    </div>
+                    <span class="stop-watch-colon">:</span>
+
+                    <div class="stop-watch__section-item">
+                        <span class="numer__item">00</span>
+                        <span class="number__desription">Ms</span>
+                    </div>
+
+
+                </div>
+                <div class="stop-watch-button__group">
+                    <button class="timer__button timer__button--one timer__button--start">Start</button>
+                    <button class="timer__button timer__button--two timer__button--stop">Stop</button>
+                    <button class="timer__button timer__button--three timer__button--stop">Lap</button>
+                    <button class="timer__button timer__button--four timer__button--reset">Reset</button>
+                </div>
+                <ul class="lap-list">
+                    <li class="lap-list__item">
+                        <span class="lap-list__serial-number">1.</span>
+                        <span class="lap-list__period">00:30:33:21</span>
+                    </li>
+                    <li class="lap-list__item">
+                        <span class="lap-list__serial-number">2.</span>
+                        <span class="lap-list__period">00:30:33:21</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="popup">
+            <p class="popup__text">
+                Please change time Lorem, ipsum dolor.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

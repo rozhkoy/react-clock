@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="timer">
+            <div class="tabs">
+                <button class="timer__button tabs__button tabs__button--active">TIMER</button>
+                <button class="timer__button tabs__button tabs__button--center">STOPWATCH</button>
+                <button class="timer__button tabs__button">CLOCK</button>
+            </div>
+            <div class="wrap-timer">
+                <div class="timer__section-group">
+                    <div class="timer__section-item">
+                        <button class="timer__button button__plus"><img src="arrow.svg" alt=""></button>
+                        <span class="numer__item">20</span>
+                        <span class="number__desription">Hrs</span>
+                        <button class="timer__button button__minus"><img src="arrow.svg" alt=""></button>
+                    </div>
+
+                    <span class="timer-colon">:</span>
+
+                    <div class="timer__section-item">
+                        <button class=" timer__button button__plus"><img src="arrow.svg" alt=""></button>
+                        <span class="numer__item">48</span>
+                        <span class="number__desription">Min</span>
+                        <button class=" timer__button button__minus"><img src="arrow.svg" alt=""></button>
+                    </div>
+
+                    <span class="timer-colon">:</span>
+
+                    <div class="timer__section-item">
+                        <button class=" timer__button button__plus"><img src="arrow.svg" alt=""></button>
+                        <span class="numer__item">10</span>
+                        <span class="number__desription">Sec</span>
+                        <button class=" timer__button button__minus"><img src="arrow.svg" alt=""></button>
+                    </div>
+
+                </div>
+                <div class="timer-button__group">
+                    <button class="timer__button timer__button--start">Start</button>
+                    <button class="timer__button timer__button--stop">Stop</button>
+                    <button class="timer__button timer__button--reset">Reset</button>
+                </div>
+            </div>
+        </div>
+        <div class="popup">
+            <p class="popup__text">
+                Please change time
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
