@@ -15,21 +15,18 @@ const TabsButton = () => {
                 stopwatch.current.classList.remove('tabs__button--active');
                 clock.current.classList.remove('tabs__button--active');
                 setTab(1);
-                console.log(selectTab)
                 break;
             case 2: 
                 timer.current.classList.remove('tabs__button--active');
                 stopwatch.current.classList.add('tabs__button--active');
                 clock.current.classList.remove('tabs__button--active');
                 setTab(2);
-                console.log(selectTab)
                 break;
             case 3: 
                 timer.current.classList.remove('tabs__button--active');
                 stopwatch.current.classList.remove('tabs__button--active');
                 clock.current.classList.add('tabs__button--active');
-                setTab(3);
-                
+                setTab(3);   
                 break;
         }
     }
@@ -46,8 +43,6 @@ const TabsButton = () => {
             {selectTab == 1 && <Timer />}
             {selectTab == 2 && <Stopwatch/>}
             {selectTab == 3 && <Clock />}
- 
-
         </div>
     )
 }
