@@ -1,18 +1,18 @@
 import react from "react";
 import ListLap from "./ListLap";
-import SectionItem from "./SectionItem";
+import StopwatchSectionItem from "./StopwatchSectionItem";
 
 const Stopwatch = () => {
     return(
         <div class="wrap-stop-watch">
             <div class="stop-watch__section-group">
-                <SectionItem desription={"Hrs"} />
+                <StopwatchSectionItem desription={"Hrs"} />
                 <span class="stop-watch-colon">:</span>
-                <SectionItem desription={"Min"} />
+                <StopwatchSectionItem desription={"Min"} />
                 <span class="stop-watch-colon">:</span>
-                <SectionItem desription={"Sec"} />
+                <StopwatchSectionItem desription={"Sec"} />
                 <span class="stop-watch-colon">:</span>
-                <SectionItem desription={"Ms"} />
+                <StopwatchSectionItem desription={"Ms"} />
                 
             </div>
             <div class="stop-watch-button__group">

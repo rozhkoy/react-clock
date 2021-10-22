@@ -1,4 +1,5 @@
 import react from "react";
+import Popup from "../Popup/Popup";
 
 const Wrap = (props) => {
         return(
@@ -7,11 +8,7 @@ const Wrap = (props) => {
 
 
                 {/* popup */}
-                <div class="popup">
-                    <p class="popup__text">
-                        Please change time Lorem, ipsum dolor.
-                    </p>
-                </div>
+                <Popup />
             </div>
         )
 }

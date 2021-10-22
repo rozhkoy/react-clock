@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import Wrap from './Wrap/Wrap';
 import TabsButton from './TabsButton/TabsButton';
