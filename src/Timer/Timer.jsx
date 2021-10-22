@@ -6,11 +6,11 @@ const Timer = () => {
     return(
         <div class="wrap-timer">
                 <div class="timer__section-group">
-                    <TimerSectionItem />
+                    <TimerSectionItem desription={'Hrs'} maxSize={24}/>
                     <span class="timer-colon">:</span>
-                    <TimerSectionItem />
+                    <TimerSectionItem desription={'Min'} maxSize={60} />
                     <span class="timer-colon">:</span>
-                    <TimerSectionItem />
+                    <TimerSectionItem desription={'Sec'} maxSize={60} />
                 </div>
                 <div class="timer-button__group">
                     <button class="timer__button timer__button--start">Start</button>
