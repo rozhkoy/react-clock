@@ -9,26 +9,11 @@ const TimerSectionItem = (props) => {
     }, [props.displayedNumber]);
 
     function minus() {
-        if (!props.stateTimer) {
-            if (indicator <= 0) {
-                SetIndicator(props.maxSize);
-            } else {
-                SetIndicator((indicator) => indicator - 1);
-            }
-        } else {
-            console.log('timer now worked');
-        }
+        props.updateNumber('minus');
     }
+
     function plus() {
-        if (!props.stateTimer) {
-            if (indicator == props.maxSize) {
-                SetIndicator(0);
-            } else {
-                SetIndicator((indicator) => indicator + 1);
-            }
-        } else {
-            console.log('timer now worked');
-        }
+        props.updateNumber('plus');
     }
     return (
         <div class="timer__section-item">
