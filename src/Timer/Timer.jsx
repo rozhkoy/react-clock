@@ -3,20 +3,23 @@ import { useState } from 'react';
 import TimerSectionItem from './TimerSectionItem';
 
 const Timer = () => {
-    const [StateTimer, setStateTimer] = useState(false);
+    const [StateTimer, setStateTimer] = useState(true);
     const [TimerHourse, setTimerHourse] = useState(0);
     const [TimerMinut, setTimerMinut] = useState(0);
     const [TimerSecond, setTimerSecond] = useState(0);
     let timer;
-    // useEffect(() => {
-    //     timer = setInterval(() => {
-    //         setTimerHourse((TimerHourse) => TimerHourse + 1);
-    //         console.log(TimerHourse);
-    //     }, 500);
-    //     return () => {
-    //         clearInterval(timer);
-    //     };
-    // });
+
+    useEffect(() => {
+        if (StateTimer) {
+            timer = setInterval(() => {
+                setTimerHourse((indicator) => indicator + 1);
+            }, 500);
+        }
+        return () => {
+            clearInterval(timer);
+        };
+    }, [setStateTimer, setTimerHourse]);
+
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
             case 'minus':
@@ -42,7 +45,6 @@ const Timer = () => {
                 }
                 break;
         }
-        console.log(TimerHourse, TimerMinut, TimerSecond);
     };
 
     const updateMinut = function (plusMinus) {
@@ -70,7 +72,6 @@ const Timer = () => {
                 }
                 break;
         }
-        console.log(TimerHourse, TimerMinut, TimerSecond);
     };
 
     const updateSecond = function (plusMinus) {
@@ -98,21 +99,40 @@ const Timer = () => {
                 }
                 break;
         }
-        console.log(TimerHourse, TimerMinut, TimerSecond);
     };
+
+    function timerStart() {
+        if (!setStateTimer) {
+            setStateTimer(true);
+        } else {
+            console.log('timer now worked');
+        }
+    }
+
+    function timerStop() {
+        if (setStateTimer) {
+            setStateTimer(false);
+        } else {
+            console.log('timer not started');
+        }
+    }
 
     return (
         <div class="wrap-timer">
             <div class="timer__section-group">
-                <TimerSectionItem desription={'Hrs'} maxSize={24} stateTimer={StateTimer} displayedNumber={TimerHourse} updateNumber={updateHourse} />
+                <TimerSectionItem desription={'Hrs'} stateTimer={StateTimer} displayedNumber={TimerHourse} updateNumber={updateHourse} />
                 <span class="timer-colon">:</span>
-                <TimerSectionItem desription={'Min'} maxSize={60} stateTimer={StateTimer} displayedNumber={TimerMinut} updateNumber={updateMinut} />
+                <TimerSectionItem desription={'Min'} stateTimer={StateTimer} displayedNumber={TimerMinut} updateNumber={updateMinut} />
                 <span class="timer-colon">:</span>
-                <TimerSectionItem desription={'Sec'} maxSize={60} stateTimer={StateTimer} displayedNumber={TimerSecond} updateNumber={updateSecond} />
+                <TimerSectionItem desription={'Sec'} stateTimer={StateTimer} displayedNumber={TimerSecond} updateNumber={updateSecond} />
             </div>
             <div class="timer-button__group">
-                <button class="timer__button timer__button--start">Start</button>
-                <button class="timer__button timer__button--stop">Stop</button>
+                <button class="timer__button timer__button--start" onClick={timerStart}>
+                    Start
+                </button>
+                <button class="timer__button timer__button--stop" onClick={timerStop}>
+                    Stop
+                </button>
                 <button class="timer__button timer__button--reset">Reset</button>
             </div>
         </div>
