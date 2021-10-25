@@ -17,6 +17,7 @@ body {
     font-weight: 300;
 }
 
+
 .wrap {
     min-width: 100%;
     min-height: 100vh;
@@ -163,6 +164,7 @@ body {
 }
 
 .popup {
+    visibility: hidden;
     position: fixed;
     width: 275px;
     right: 20px;
@@ -338,5 +340,22 @@ body {
     }
     .clock__section-group {
         padding: 70px 15px;
+    }
+}
+.visibal-block{
+    visibility: visible;
+}
+
+.anima{
+    animation-name: opasit;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+@keyframes opasit {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
     }
 }

@@ -16,6 +16,9 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
 }
+.visibal-block{
+    visibility: visible;
+}
 
 .wrap {
     min-width: 100%;
@@ -163,6 +166,7 @@ body {
 }
 
 .popup {
+    visibility: hidden;
     position: fixed;
     width: 275px;
     right: 20px;

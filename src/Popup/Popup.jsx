@@ -1,12 +1,28 @@
-import react from "react";
+import React, { createContext, useEffect, useState, useRef } from "react";
 
-const Popup = () => {
+const Popup = (props) => {
+     const refPopup = useRef(null)
+     
+        if(props.messeges){
+            console.log("ohh");
+            refPopup.current.classList.add('visibal-block')
+            setTimeout(() => {
+                refPopup.current.classList.add('anima')
+            }, 2000);
+            setTimeout(() => {
+                refPopup.current.classList.remove('visibal-block')
+                refPopup.current.classList.remove('anima')
+            }, 2150);
+         }
+     
+     
     return(
-        <div class="popup">
+        <div ref={refPopup} class="popup ">
             <p class="popup__text">
-                Please change time Lorem, ipsum dolor.
+                {props.messeges}
             </p>
         </div>
+
     )
 }
 

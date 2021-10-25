@@ -1,7 +1,8 @@
-import react, { useEffect, useRef } from 'react';
+import react, { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import TimerSectionItem from './TimerSectionItem';
 import { Timer } from 'ez-timer';
+import {ContextPopupMesseges} from "../Wrap/Wrap"
 
 const TimerC = () => {
     const [StateTimer, setStateTimer] = useState(false);
@@ -17,9 +18,11 @@ const TimerC = () => {
         minut: 0,
         second: 0,
         mili: 0,
-        calcmili: 0,
         currentMili: 0
     }
+
+    const showMesseges = useContext(ContextPopupMesseges);
+
     function calculationDate(){
         startDate.current = new Date();  
         console.log(startDate.current , "add")
@@ -27,22 +30,24 @@ const TimerC = () => {
         console.log(calculateMili.mili , "hourse to mili")
         endDate.current = calculateMili.mili + Date.now();
         console.log(endDate.current , "end date");
-    }
+    }   
     
 
     useEffect(() => {
-    
+        console.log("state update")
         if(StateTimer){
             timer = setInterval(() => {
-                console.time("f")
                 calculateMili.currentMili =  ( new Date(endDate.current) - Date.now());
-                // calculateMili.calcmili = new Date(endDate) - startDate;
-                console.log(calculateMili.currentMili)
+                if(calculateMili.currentMili <= 0){
+                    clearInterval(timer);
+                    console.log("end");
+                    showMesseges('end')
+
+                }
                 calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60));
                 calculateMili.minut = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
                 calculateMili.second =  Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60
-                console.log(calculateMili.hourse,calculateMili.mili,calculateMili.second, "H:M:S")
-                console.timeEnd("f")
+                console.log(calculateMili.hourse,calculateMili.minut,calculateMili.second, "H:M:S")
                 setTimerHourse(calculateMili.hourse)
                 setTimerMinut(calculateMili.minut)
                 setTimerSecond(calculateMili.second)
@@ -53,30 +58,32 @@ const TimerC = () => {
             clearInterval(timer);
         }
         
-    }, [StateTimer, TimerHourse]);
+    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
             case 'minus':
                 if (!StateTimer) {
                     if (TimerHourse <= 0) {
-                        setTimerHourse(60);
+                        setTimerHourse(24);
                     } else {
                         setTimerHourse((TimerHourse) => TimerHourse - 1);
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (TimerHourse == 60) {
+                    if (TimerHourse == 24) {
                         setTimerHourse(0);
                     } else {
                         setTimerHourse((TimerHourse) => TimerHourse + 1);
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
         }
@@ -93,6 +100,7 @@ const TimerC = () => {
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
             case 'plus':
@@ -104,6 +112,7 @@ const TimerC = () => {
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
         }
@@ -120,17 +129,19 @@ const TimerC = () => {
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (setTimerSecond == 60) {
+                    if (TimerSecond >= 60) {
                         setTimerSecond(0);
                     } else {
                         setTimerSecond((TimerSecond) => TimerSecond + 1);
                     }
                 } else {
                     console.log('timer now worked');
+                    showMesseges('The timer is running, if you want to change the time, leave the timer')
                 }
                 break;
         }
@@ -138,13 +149,17 @@ const TimerC = () => {
     
 
     function timerStart() {
+        if(TimerHourse == 0 && TimerMinut == 0 && TimerSecond == 0){
+            showMesseges('Please, select time');
+        }else{
         calculationDate()
         console.log(StateTimer, "start");
         if (!StateTimer) {
             setStateTimer(true);
         } else {
-            console.log('timer now worked');
+            showMesseges('Ohh, Timer started');
         }
+    }
     }
 
     function timerStop() {
@@ -152,12 +167,13 @@ const TimerC = () => {
         if (StateTimer) {
             setStateTimer(false);
         } else {
-            console.log('timer not started');
+            showMesseges('Ohh, timer stoped ');
         }
     }
 
     return (
         <div class="wrap-timer">
+            
             <div class="timer__section-group">
                 <TimerSectionItem desription={'Hrs'} stateTimer={StateTimer} displayedNumber={TimerHourse} updateNumber={updateHourse} />
                 <span class="timer-colon">:</span>
