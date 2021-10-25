@@ -1,7 +1,7 @@
 import react, { useEffect, useRef, useState } from "react";
 import Clock from "../Clock/Clock";
 import Stopwatch from "../Stopwatch/Stopwatch";
-import Timer from "../Timer/Timer";
+import TimerC from "../Timer/Timer";
 
 const TabsButton = () => {
     const [selectTab, setTab] = useState(1);
@@ -40,7 +40,7 @@ const TabsButton = () => {
                 <button ref={stopwatch} class="timer__button tabs__button " onClick={() => setTab(2)}>STOPWATCH</button>
                 <button ref={clock} class="timer__button tabs__button " onClick={() => setTab(3)}>CLOCK</button>
             </div>
-            {selectTab == 1 && <Timer />}
+            {selectTab == 1 && <TimerC />}
             {selectTab == 2 && <Stopwatch/>}
             {selectTab == 3 && <Clock />}
         </div>

@@ -1,24 +1,59 @@
-import react, { useEffect } from 'react';
+import react, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import TimerSectionItem from './TimerSectionItem';
+import { Timer } from 'ez-timer';
 
-const Timer = () => {
-    const [StateTimer, setStateTimer] = useState(true);
+const TimerC = () => {
+    const [StateTimer, setStateTimer] = useState(false);
     const [TimerHourse, setTimerHourse] = useState(0);
     const [TimerMinut, setTimerMinut] = useState(0);
     const [TimerSecond, setTimerSecond] = useState(0);
     let timer;
+    const endDate = useRef(0) ;
+    const startDate = useRef(0);
+    let assignmentMili;
+    let calculateMili = {
+        hourse: 0,
+        minut: 0,
+        second: 0,
+        mili: 0,
+        calcmili: 0,
+        currentMili: 0
+    }
+    function calculationDate(){
+        startDate.current = new Date();  
+        console.log(startDate.current , "add")
+        calculateMili.mili = (TimerHourse * 60 * 60 * 1000) + (TimerMinut * 60 * 1000) + (TimerSecond * 1000);
+        console.log(calculateMili.mili , "hourse to mili")
+        endDate.current = calculateMili.mili + Date.now();
+        console.log(endDate.current , "end date");
+    }
+    
 
     useEffect(() => {
-        if (StateTimer) {
+    
+        if(StateTimer){
             timer = setInterval(() => {
-                setTimerHourse((indicator) => indicator + 1);
-            }, 500);
+                console.time("f")
+                calculateMili.currentMili =  ( new Date(endDate.current) - Date.now());
+                // calculateMili.calcmili = new Date(endDate) - startDate;
+                console.log(calculateMili.currentMili)
+                calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60));
+                calculateMili.minut = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
+                calculateMili.second =  Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60
+                console.log(calculateMili.hourse,calculateMili.mili,calculateMili.second, "H:M:S")
+                console.timeEnd("f")
+                setTimerHourse(calculateMili.hourse)
+                setTimerMinut(calculateMili.minut)
+                setTimerSecond(calculateMili.second)
+            }, 200);
         }
-        return () => {
+
+        return () =>{
             clearInterval(timer);
-        };
-    }, [setStateTimer, setTimerHourse]);
+        }
+        
+    }, [StateTimer, TimerHourse]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
@@ -100,9 +135,12 @@ const Timer = () => {
                 break;
         }
     };
+    
 
     function timerStart() {
-        if (!setStateTimer) {
+        calculationDate()
+        console.log(StateTimer, "start");
+        if (!StateTimer) {
             setStateTimer(true);
         } else {
             console.log('timer now worked');
@@ -110,7 +148,8 @@ const Timer = () => {
     }
 
     function timerStop() {
-        if (setStateTimer) {
+        console.log(StateTimer, "stop");
+        if (StateTimer) {
             setStateTimer(false);
         } else {
             console.log('timer not started');
@@ -138,4 +177,4 @@ const Timer = () => {
         </div>
     );
 };
-export default Timer;
+export default TimerC;
