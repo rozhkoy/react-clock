@@ -1,8 +1,11 @@
 import React, { createContext, useEffect, useState, useRef } from "react";
+import useForceUpdate from "use-force-update";
+
 
 const Popup = (props) => {
      const refPopup = useRef(null)
-     
+     const updateforce = useForceUpdate();
+     useEffect(() =>{
         if(props.messeges){
             console.log("ohh");
             refPopup.current.classList.add('visibal-block')
@@ -14,6 +17,8 @@ const Popup = (props) => {
                 refPopup.current.classList.remove('anima')
             }, 2150);
          }
+         updateforce();
+        },[props.messeges])
      
      
     return(

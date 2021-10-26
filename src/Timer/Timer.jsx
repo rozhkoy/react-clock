@@ -150,14 +150,14 @@ const TimerC = () => {
 
     function timerStart() {
         if(TimerHourse == 0 && TimerMinut == 0 && TimerSecond == 0){
-            showMesseges('Please, select time');
+            showMesseges(() => 'Please, select time');
         }else{
         calculationDate()
         console.log(StateTimer, "start");
         if (!StateTimer) {
             setStateTimer(true);
         } else {
-            showMesseges('Ohh, Timer started');
+            showMesseges(() => 'Ohh, Timer started');
         }
     }
     }
@@ -167,8 +167,14 @@ const TimerC = () => {
         if (StateTimer) {
             setStateTimer(false);
         } else {
-            showMesseges('Ohh, timer stoped ');
+            showMesseges('Ohh, timer stoped');
         }
+    }
+    
+    function timerReset() {
+        setTimerHourse(0);
+        setTimerMinut(0);
+        setTimerSecond(0);
     }
 
     return (
@@ -188,7 +194,7 @@ const TimerC = () => {
                 <button class="timer__button timer__button--stop" onClick={timerStop}>
                     Stop
                 </button>
-                <button class="timer__button timer__button--reset">Reset</button>
+                <button class="timer__button timer__button--reset" onClick={timerReset}>Reset</button>
             </div>
         </div>
     );
