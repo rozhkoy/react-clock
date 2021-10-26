@@ -5,9 +5,7 @@
     box-sizing: border-box;
 }
 
-
 /* 0cc1aa  green*/
-
 
 /* 0e0e0e  black*/
 
@@ -16,7 +14,6 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
 }
-
 
 .wrap {
     min-width: 100%;
@@ -83,13 +80,13 @@ body {
 .button__plus:hover,
 .button__minus:hover {
     background: #f0efef;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .button__plus:active,
 .button__minus:active {
     background: #c7c7c7;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .button__minus {
@@ -144,14 +141,14 @@ body {
 .timer__button--start:hover,
 .timer__button--stop:hover {
     background: #777777;
-    transition: .2s;
+    transition: 0.2s;
     color: rgb(238, 238, 238);
 }
 
 .timer__button--start:active,
 .timer__button--stop:active {
     background: rgb(75, 75, 75);
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .timer__button--reset:hover {
@@ -188,7 +185,7 @@ body {
 
 .tabs__button:hover {
     border-bottom: 2px solid #0fdfc3;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .tabs__button--active {
@@ -342,20 +339,23 @@ body {
         padding: 70px 15px;
     }
 }
-.visibal-block{
+.visibal-block {
     visibility: visible;
 }
 
-.anima{
+.anima {
     animation-name: opasit;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
     animation-fill-mode: both;
 }
 @keyframes opasit {
-    0%{
+    0% {
         opacity: 1;
     }
-    100%{
+    59% {
+        opacity: 1;
+    }
+    100% {
         opacity: 0;
     }
 }

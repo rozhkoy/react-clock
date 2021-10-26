@@ -1,25 +1,32 @@
-import react, { createContext, useEffect, useState } from "react";
+import react, { createContext, useEffect, useRef, useState } from "react";
 import useForceUpdate from "use-force-update";
 import Popup from "../Popup/Popup";
 export const ContextPopupMesseges = createContext()
 
 
 const Wrap = (props) => {
-   const update = useForceUpdate()
+    const update = useForceUpdate()
     const [popupMesseges , setMesseges] = useState('');
-    
+    const [popupState, setPopupState] = useState(true);
+    const child = useRef();
+    const handleOnClick = () => {
+        if (child.current) {
+          child.current.showPopup();
+        }
+      }
+ 
     
     const showMesseges = (text) =>{
         setMesseges(text);
-        setMesseges((text) => text)
-        console.log(text)
-        update();
+        child.current.showPopup();
     }
         return(
             <ContextPopupMesseges.Provider value={showMesseges}>
             <div class="wrap">
                 {props.children} 
-                <Popup messeges={popupMesseges} />
+                <Popup ref={child} messeges={popupMesseges} />
+                <button onClick={handleOnClick}>Call foo</button>
+
             </div>
             </ContextPopupMesseges.Provider>
         )
