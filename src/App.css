@@ -345,14 +345,11 @@ body {
 
 .anima {
     animation-name: opasit;
-    animation-duration: 1.5s;
+    animation-duration: 0.5s;
     animation-fill-mode: both;
 }
 @keyframes opasit {
     0% {
-        opacity: 1;
-    }
-    59% {
         opacity: 1;
     }
     100% {

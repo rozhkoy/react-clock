@@ -25,7 +25,6 @@ const Wrap = (props) => {
             <div class="wrap">
                 {props.children} 
                 <Popup ref={child} messeges={popupMesseges} />
-                <button onClick={handleOnClick}>Call foo</button>
 
             </div>
             </ContextPopupMesseges.Provider>

@@ -175,6 +175,8 @@ const TimerC = () => {
         setTimerHourse(0);
         setTimerMinut(0);
         setTimerSecond(0);
+        setStateTimer(false)
+
     }
 
     return (

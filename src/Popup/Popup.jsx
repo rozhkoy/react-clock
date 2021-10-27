@@ -3,21 +3,29 @@ import useForceUpdate from "use-force-update";
 
 
 const Popup = forwardRef((props, ref) => {
-    const [statePopup, setPopupState] = useState(false)
+    const popupState = useRef(false)
     const controlPopup = useRef(null)
      let delayPopup;
+     let delayAnimation
     useImperativeHandle(ref, () => ({
         showPopup(){
-                controlPopup.current.classList.add("anima");
-                controlPopup.current.classList.add("visibal-block"); 
-                setPopupState(true)
-                delayPopup = setTimeout(() =>{
-                    controlPopup.current.classList.remove("visibal-block"); 
-                    controlPopup.current.classList.remove("anima");
-                    setPopupState(false)
-            } , 1400)
-        
-        }
+
+                clearTimeout(delayAnimation);
+                clearTimeout(delayPopup);
+                controlPopup.current.classList.add("visibal-block");  
+                popupState.current = true;
+                delayAnimation = setTimeout(() =>{
+                    controlPopup.current.classList.add("anima");
+                    delayPopup = setTimeout(() =>{
+                        controlPopup.current.classList.remove("visibal-block"); 
+                        controlPopup.current.classList.remove("anima");
+                        
+                        
+                    }, 200)
+                }, 1500)
+                    
+                
+            } 
     }))
 
 
