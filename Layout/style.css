@@ -235,7 +235,7 @@ body {
 .clock__section-group {
     display: grid;
     grid-template-columns: 1fr 20px 1fr 20px 1fr;
-    padding: 70px;
+    padding: 70px 70px 30px 70px;
 }
 
 .clock-colon {
@@ -274,6 +274,11 @@ body {
 .preview-time__sub-timer {
     font-size: 14px;
     font-weight: 300;
+}
+.clock__date {
+    text-align: end;
+    padding: 0px 20px 20px 20px;
+    font-size: 26px;
 }
 
 @media (max-width: 680px) {
