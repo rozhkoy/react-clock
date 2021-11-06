@@ -1,7 +1,8 @@
  
     let capitale;
     let array = []
-
+    var DateTime = luxon.DateTime;
+    let dateTime = DateTime.local();
  function go(){
     console.time();
    fetch('https://restcountries.com/v2/all')
@@ -18,9 +19,19 @@
                   array[i].capital = commits[i].name;
                }
                array[i].latlng = commits[i].latlng;
-            
+               array[i].region = commits[i].region;
 
          }
+         // for(let g = 0; j < array.length; j++){
+         //    let addres = '';
+         //    let region = '';
+         //    let cap = ''
+         //    region = array[g].
+
+         //    dateTime = dateTime.setZone("America/La_Paz");
+         //    console.log("Custom date, America/La_Paz", dateTime.toISO());
+         // }
+
          console.log(array);
       })
       .then(() =>{
@@ -50,6 +61,7 @@
           arraySimilarWord.push(array[k].capital)
       }
    }
+   
    console.log(arraySimilarWord);
    console.timeEnd();
  }
