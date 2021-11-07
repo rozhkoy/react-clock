@@ -5,7 +5,7 @@ import TimerC from "../Timer/Timer";
 
 
 const TabsButton = () => {
-    const [selectTab, setTab] = useState(1);
+    const [selectTab, setTab] = useState(3);
     const timer = useRef(null)
     const stopwatch = useRef(null)
     const clock = useRef(null)

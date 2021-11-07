@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* 0cc1aa  green*/
@@ -11,7 +12,7 @@
 
 body {
     background: #dad8d8;
-    font-family: 'Montserrat', sans-serif;
+
     font-weight: 300;
 }
 
@@ -231,7 +232,7 @@ body {
 .clock__section-group {
     display: grid;
     grid-template-columns: 1fr 20px 1fr 20px 1fr;
-    padding: 70px;
+    padding: 70px 70px 30px 70px;
 }
 
 .clock-colon {
@@ -246,12 +247,86 @@ body {
     text-align: center;
 }
 
+.preview-time {
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
+}
+.preview-time__item {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: center;
+    width: fit-content;
+    padding: 10px 15px;
+    border: 1px solid rgb(206, 198, 198);
+    margin: 10px 0 0 10px;
+    background: #ececec;
+}
+.preview-time__capital {
+    font-weight: 400;
+    font-size: 16px;
+}
+.preview-time__sub-timer {
+    font-size: 14px;
+    font-weight: 300;
+}
+.clock__date {
+    text-align: end;
+    padding: 0px 0px 20px 0px;
+    font-size: 26px;
+}
+.wrap-clock {
+    padding: 20px;
+}
+.search {
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+.search__input {
+    width: 100%;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.search__bttn {
+    padding: 5px 15px;
+    border-radius: 0px;
+    border: 1px solid #0fdfc3;
+    background: #0fdfc3;
+    color: #fff;
+}
+.search__result {
+    position: absolute;
+    top: 100%;
+    background: white;
+    width: 100%;
+    list-style: none;
+    padding: 5px 0;
+    border: 1px solid #ccc;
+    border-top: n;
+}
+.search__result li {
+    padding: 3px 5px;
+}
+.search__result li:hover {
+    transition: 0.3s;
+    background: #dcdbdb;
+}
+.active__list {
+    background: red;
+}
+
 @media (max-width: 680px) {
     .timer__section-group {
         padding: 70px 40px;
     }
     .stop-watch__section-group {
         padding: 70px 30px;
+    }
+    .wrap {
+        padding: 0;
     }
 }
 
@@ -269,7 +344,7 @@ body {
         font-size: 21px;
     }
     .clock__section-group {
-        padding: 70px 30px;
+        padding: 70px 0px;
     }
 }
 
@@ -318,7 +393,7 @@ body {
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 420px) {
     .timer__section-item {
         font-size: 60px;
     }
@@ -337,6 +412,9 @@ body {
     }
     .clock__section-group {
         padding: 70px 15px;
+    }
+    .wrap-clock {
+        padding: 10px;
     }
 }
 .visibal-block {

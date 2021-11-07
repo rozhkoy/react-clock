@@ -254,7 +254,6 @@ body {
     display: flex;
     justify-content: end;
     flex-wrap: wrap;
-    padding: 0 20px 20px 20px;
 }
 .preview-time__item {
     display: flex;
@@ -277,8 +276,11 @@ body {
 }
 .clock__date {
     text-align: end;
-    padding: 0px 20px 20px 20px;
+    padding: 0px 0px 20px 0px;
     font-size: 26px;
+}
+.wrap-clock {
+    padding: 20px;
 }
 
 @media (max-width: 680px) {
@@ -287,6 +289,9 @@ body {
     }
     .stop-watch__section-group {
         padding: 70px 30px;
+    }
+    .wrap {
+        padding: 0;
     }
 }
 
@@ -353,7 +358,7 @@ body {
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 425px) {
     .timer__section-item {
         font-size: 60px;
     }
