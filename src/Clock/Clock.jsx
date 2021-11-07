@@ -6,27 +6,64 @@ import { DateTime, Settings } from "luxon";
 const Clock = () => {
     let dateTime = DateTime.local();
     const resultListArray = useRef([])
-    console.log("Current Date", dateTime.toISOTime());
-    const [cc , setcc] = useState(0) 
+    // console.log("Current Date", dateTime.toISOTime());
+    // const [counterRow , setCounterRow] = useState(0) 
+    const counterRow = useRef(0)
 
 
     const [rusultList, setResultList] = useState([
         {id: 0, text: "Moscow, Russia"},
         {id: 1, text: "Tokyo, Japan"},
-        {id: 2, text: "Oslo, Norway"}])
+        {id: 2, text: "Oslo, Norway"},
+        {id: 1, text: "Tokyo, Japan"}])
     console.log(rusultList)
-    function changeResult() {
-        resultListArray.current[cc].classList.add('active__list');
-        // console.log(resultListArray)
-        setcc((num)=>num + 1)
+    function changeResult(event) {
+
+
+        //  to bottom
+        if(event.keyCode === 40){
+            resultListArray.current[rusultList.length - 1].classList.remove('active__list')
+
+            counterRow.current++;
+            if(resultListArray.current[counterRow.current - 1]){
+                resultListArray.current[counterRow.current - 1].classList.add('active__list');
+                if(resultListArray.current[counterRow.current - 1].previousSibling){
+                    resultListArray.current[counterRow.current - 1].previousSibling.classList.remove('active__list');
+                }
+            }
+            if(counterRow.current == rusultList.length){
+                counterRow.current = 0;
+            }
+            console.log(" - ",counterRow.current)
+        }
+                    
+        
+        if(event.keyCode === 38){
+            counterRow.current--;
+            if(counterRow.current <= 0){
+                counterRow.current = rusultList.length; 
+                resultListArray.current[0].classList.remove('active__list');
+            }
+            resultListArray.current[counterRow.current - 1].classList.add('active__list');
+            if(resultListArray.current[counterRow.current - 1].nextSibling){
+                resultListArray.current[counterRow.current - 1].nextSibling.classList.remove('active__list');
+            }
+            
+        
+            
+            console.log(" + ",counterRow.current)
+            
+            
+            
+        }
     }
     useEffect(()=>{
         document.addEventListener("keyup", changeResult);
-
+        console.log(counterRow, (rusultList.length - 1))
         return () =>{
             document.removeEventListener("keyup", changeResult);
         }
-    })
+    }) 
 
 
     return(
