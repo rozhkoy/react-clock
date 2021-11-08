@@ -6,10 +6,12 @@ import { DateTime, Settings } from "luxon";
 const Clock = () => {
     let dateTime = DateTime.local();
     const resultListArray = useRef([])
-    // console.log("Current Date", dateTime.toISOTime());
-    // const [counterRow , setCounterRow] = useState(0) 
-    const counterRow = useRef(0)
-
+    
+    const counterRow = useRef(-1)
+    const searchDate = useRef({
+        enteredText: 'jakoma',
+        ToUp: false,
+    })
 
     const [rusultList, setResultList] = useState([
         {id: 0, text: "Moscow, Russia"},
@@ -23,37 +25,47 @@ const Clock = () => {
         //  to bottom
         if(event.keyCode === 40){
             resultListArray.current[rusultList.length - 1].classList.remove('active__list')
-
             counterRow.current++;
-            if(resultListArray.current[counterRow.current - 1]){
-                resultListArray.current[counterRow.current - 1].classList.add('active__list');
-                if(resultListArray.current[counterRow.current - 1].previousSibling){
-                    resultListArray.current[counterRow.current - 1].previousSibling.classList.remove('active__list');
-                }
-            }
-            if(counterRow.current == rusultList.length){
+            console.log(counterRow.current)
+            if(counterRow.current > rusultList.length ){
                 counterRow.current = 0;
             }
-            console.log(" - ",counterRow.current)
-        }
-                    
-        
+            if(counterRow.current >= rusultList.length){
+                console.log(searchDate.current.enteredText)
+                counterRow.current = -1;
+            }
+            if(resultListArray.current[counterRow.current]){
+                resultListArray.current[counterRow.current].classList.add('active__list');
+                if(resultListArray.current[counterRow.current].previousSibling){
+                    resultListArray.current[counterRow.current].previousSibling.classList.remove('active__list');
+                }   
+            }
+            
+            
+        }    
         if(event.keyCode === 38){
+            
             counterRow.current--;
-            if(counterRow.current <= 0){
-                counterRow.current = rusultList.length; 
+            console.log("before",counterRow.current)
+            if(counterRow.current <  -1){
+        
+                counterRow.current = rusultList.length - 1;
                 resultListArray.current[0].classList.remove('active__list');
             }
-            resultListArray.current[counterRow.current - 1].classList.add('active__list');
-            if(resultListArray.current[counterRow.current - 1].nextSibling){
-                resultListArray.current[counterRow.current - 1].nextSibling.classList.remove('active__list');
+            if(counterRow.current == -1){
+                console.log(searchDate.current.enteredText)
+                counterRow.current = rusultList.length;
+                resultListArray.current[0].classList.remove('active__list');
             }
             
-        
-            
-            console.log(" + ",counterRow.current)
-            
-            
+
+            if(resultListArray.current[counterRow.current]){
+                resultListArray.current[counterRow.current].classList.add('active__list');
+                if(resultListArray.current[counterRow.current + 1]){
+                    resultListArray.current[counterRow.current + 1].classList.remove('active__list');
+                } 
+            }
+            console.log("after",counterRow.current)
             
         }
     }
