@@ -315,7 +315,8 @@ body {
     background: #dcdbdb;
 }
 .active__list {
-    background: red;
+    background: rgb(162, 162, 162);
+    color: #fff;
 }
 
 @media (max-width: 680px) {
