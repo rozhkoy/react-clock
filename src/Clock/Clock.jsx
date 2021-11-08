@@ -28,7 +28,7 @@ const Clock = () => {
             counterRow.current++;
             console.log(counterRow.current)
             if(counterRow.current > rusultList.length ){
-                counterRow.current = 0;
+                counterRow.current = 0git ;
             }
             if(counterRow.current >= rusultList.length){
                 console.log(searchDate.current.enteredText)
