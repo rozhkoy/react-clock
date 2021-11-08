@@ -7,6 +7,7 @@ const Clock = () => {
     let dateTime = DateTime.local();
     const resultListArray = useRef([])
     const counterRow = useRef(-1);
+    const [stateApi , setStateApi] = useState(false);
     const searchDate = useRef({enteredText: 'jakoma'})
     const [enteredText, setEnteredText] = useState('');
     const [rusultList, setResultList] = useState([
@@ -14,7 +15,31 @@ const Clock = () => {
         {id: 1, text: "Tokyo, Japan"},
         {id: 2, text: "Oslo, Norway"},
         {id: 3, text: "Tokyo, Japan"}])
+    const countryList = useRef([])    
     
+    useEffect(() =>{
+        if(stateApi == false){
+            fetch('https://restcountries.com/v2/all')
+                .then(response => response.json())
+                .then(commits => {
+                    for(let i = 0; i < commits.length; i++){
+                    countryList.current[i] = {}
+                        
+                    countryList.current[i].index = i;
+                    countryList.current[i].name = commits[i].name;
+                        if('capital' in commits[i]){
+                            countryList.current[i].capital = commits[i].capital;
+                        }else{
+                            countryList.current[i].capital = commits[i].name;
+                        }
+                        countryList.current[i].region = commits[i].region;
+
+                    }
+                    console.log(countryList.current);
+                })
+                setStateApi(true)
+        }
+    })
 
 
     function UpdateInput(event) {
