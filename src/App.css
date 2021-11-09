@@ -305,7 +305,9 @@ body {
     list-style: none;
     padding: 5px 0;
     border: 1px solid #ccc;
-    border-top: n;
+    border-top: none;
+    opacity: 0;
+    pointer-events: none;
 }
 .search__result li {
     padding: 3px 5px;
@@ -318,7 +320,11 @@ body {
     background: rgb(162, 162, 162);
     color: #fff;
 }
-
+.hintsList {
+    opacity: 1;
+    pointer-events: auto;
+    transition: 0.2s;
+}
 @media (max-width: 680px) {
     .timer__section-group {
         padding: 70px 40px;
