@@ -22,26 +22,31 @@ const Clock = () => {
 
     function updateHintsList() {
         resultListArray.current.length = 0;
-        console.log('Befpre-updateList', resultListArray.current);
-        const hintsList = rusultList.map((Item) => (
-            <li ref={(elRef) => resultListArray.current.push(elRef)} onClick={() => changeInputDate(Item.id, false)} key={Item.id}>
+
+        const hintsList = rusultList.map((Item, index) => (
+            <li
+                ref={(elRef) => {
+                    resultListArray.current[index] = elRef;
+                }}
+                onClick={() => changeInputDate(Item.id, false)}
+                key={Item.id}
+            >
                 {Item.text}
             </li>
         ));
+        console.log(resultListArray);
         setHintsListUpdate(hintsList);
-        console.log('updateList', resultListArray.current);
+        console.log('====================================================');
     }
 
     function UpdateInput(event) {
         let temporally = event.target.value;
-        console.log(temporally);
         searchDate.current.enteredText = temporally;
         createHintsList(temporally);
         setEnteredText(temporally);
     }
 
     function changeInputDate(index, last) {
-        console.log('entered', index, rusultList[index]);
         counterRow.current = index;
         if (last == true && index == -1) {
             setEnteredText(searchDate.current.enteredText);
@@ -59,14 +64,11 @@ const Clock = () => {
             resultListArray.current[rusultList.length - 1].classList.remove('active__list');
             counterRow.current++;
             if (counterRow.current >= rusultList.length) {
-                console.log(counterRow.current);
                 counterRow.current = -1;
-                console.log('sweg');
                 changeInputDate(counterRow.current, true);
             }
             if (resultListArray.current[counterRow.current]) {
                 resultListArray.current[counterRow.current].classList.add('active__list');
-                console.log(counterRow.current);
                 changeInputDate(counterRow.current);
                 if (resultListArray.current[counterRow.current].previousSibling) {
                     resultListArray.current[counterRow.current].previousSibling.classList.remove('active__list');
@@ -81,14 +83,12 @@ const Clock = () => {
                 resultListArray.current[0].classList.remove('active__list');
             }
             if (counterRow.current == -1) {
-                console.log('sweg');
                 changeInputDate(counterRow.current, true);
                 counterRow.current = rusultList.length;
                 resultListArray.current[0].classList.remove('active__list');
             }
             if (resultListArray.current[counterRow.current]) {
                 resultListArray.current[counterRow.current].classList.add('active__list');
-                console.log(counterRow.current);
                 changeInputDate(counterRow.current);
                 if (resultListArray.current[counterRow.current + 1]) {
                     resultListArray.current[counterRow.current + 1].classList.remove('active__list');
@@ -98,23 +98,23 @@ const Clock = () => {
     }
 
     function createHintsList(text) {
-        console.log('createHintsList');
         let regex = new RegExp(`^${text}`, 'i', 'm');
         let newID = 0;
         let newResultList = [];
         let listSize = 0;
-        console.log('lsit', newResultList, newID);
+
         for (let i = 0; i < ListForHints.length; i++) {
             if (ListForHints[i].capital.match(regex)) {
                 console.log(ListForHints[i].capital.match(regex));
                 newID++;
                 newResultList.push({ id: newID, text: ListForHints[i].capital });
                 listSize++;
-            } else {
-                // newResultList = [{ id: 0, text: 'Null' }];
             }
         }
-        console.log(newResultList);
+        if (newResultList.length === 0) {
+            newResultList.push({ id: newID, text: 'No search results' });
+        }
+        listSize = 0;
         setResultList(newResultList);
         updateHintsList();
     }
@@ -124,6 +124,7 @@ const Clock = () => {
     }
     useEffect(() => {
         updateHintsList();
+        console.log(resultListArray.current);
     }, [enteredText]);
 
     return (
@@ -181,6 +182,7 @@ const Clock = () => {
                     <div class="preview-time__sub-timer">14:34</div>
                 </button>
             </div>
+            <button onClick={updateHintsList}>erererere</button>
         </div>
     );
 };
