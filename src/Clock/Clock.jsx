@@ -18,13 +18,26 @@ const Clock = () => {
         { id: 2, text: 'Oslo, Norway' },
         { id: 3, text: 'Tokyo, Japan' },
     ]);
+    const [hintsListUpdate, setHintsListUpdate] = useState();
+
+    function updateHintsList() {
+        resultListArray.current.length = 0;
+        console.log('Befpre-updateList', resultListArray.current);
+        const hintsList = rusultList.map((Item) => (
+            <li ref={(elRef) => resultListArray.current.push(elRef)} onClick={() => changeInputDate(Item.id, false)} key={Item.id}>
+                {Item.text}
+            </li>
+        ));
+        setHintsListUpdate(hintsList);
+        console.log('updateList', resultListArray.current);
+    }
 
     function UpdateInput(event) {
         let temporally = event.target.value;
         console.log(temporally);
         searchDate.current.enteredText = temporally;
+        createHintsList(temporally);
         setEnteredText(temporally);
-        createHintsList();
     }
 
     function changeInputDate(index, last) {
@@ -84,27 +97,34 @@ const Clock = () => {
         }
     }
 
-    function createHintsList() {
+    function createHintsList(text) {
         console.log('createHintsList');
-        let regex = new RegExp(`^${enteredText}`, 'i', 'm');
+        let regex = new RegExp(`^${text}`, 'i', 'm');
         let newID = 0;
-        let newResultList = [{ id: 0, text: 'huj' }];
+        let newResultList = [];
+        let listSize = 0;
+        console.log('lsit', newResultList, newID);
         for (let i = 0; i < ListForHints.length; i++) {
-            // console.log(ListForHints[i].capital.match(regex));
             if (ListForHints[i].capital.match(regex)) {
                 console.log(ListForHints[i].capital.match(regex));
-                newResultList = rusultList.splice();
                 newID++;
                 newResultList.push({ id: newID, text: ListForHints[i].capital });
+                listSize++;
             } else {
+                // newResultList = [{ id: 0, text: 'Null' }];
             }
         }
+        console.log(newResultList);
         setResultList(newResultList);
+        updateHintsList();
     }
 
     function focusInpit() {
         hitsList.current.classList.add('hintsList');
     }
+    useEffect(() => {
+        updateHintsList();
+    }, [enteredText]);
 
     return (
         <div class="wrap-clock">
@@ -112,11 +132,7 @@ const Clock = () => {
                 <input type="text" class="search__input" placeholder="Search by country or capital" onKeyDown={changeResult} value={enteredText} onChange={UpdateInput} />
                 <button class="search__bttn">Search</button>
                 <ul className="search__result" ref={hitsList}>
-                    {rusultList.map((Item) => (
-                        <li ref={(elRef) => resultListArray.current.push(elRef)} onClick={() => changeInputDate(Item.id, false)} key={Item.id}>
-                            {Item.text}
-                        </li>
-                    ))}
+                    {hintsListUpdate}
                 </ul>
             </div>
             <div class="clock__section-group">
