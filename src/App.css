@@ -9,6 +9,9 @@
 /* 0cc1aa  green*/
 
 /* 0e0e0e  black*/
+::-webkit-scrollbar {
+    width: 0;
+}
 
 body {
     background: #dad8d8;
@@ -303,7 +306,7 @@ body {
     background: white;
     width: 100%;
     list-style: none;
-    padding: 5px 0;
+    padding: 10px 0 0 0;
     border: 1px solid #ccc;
     border-top: none;
     opacity: 0;
@@ -317,7 +320,7 @@ body {
     background: #dcdbdb;
 }
 .active__list {
-    background: rgb(162, 162, 162);
+    background: rgb(193, 193, 193);
     color: #fff;
 }
 .hintsList {

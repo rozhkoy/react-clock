@@ -24,7 +24,8 @@ function App() {
                       }else{
                           countryList.current[i].capital = commits[i].name;
                       }
-                      countryList.current[i].region = commits[i].region;
+                      countryList.current[i].latlng = commits[i].latlng;
+                      
 
                   }
                   console.log(countryList.current);
