@@ -34,9 +34,7 @@ const Clock = () => {
                 {Item.text}
             </li>
         ));
-        console.log(resultListArray);
         setHintsListUpdate(hintsList);
-        console.log('====================================================');
     }
 
     function UpdateInput(event) {
@@ -102,12 +100,13 @@ const Clock = () => {
         let newID = 0;
         let newResultList = [];
         let listSize = 0;
+        let countryCapital = '';
 
         for (let i = 0; i < ListForHints.length; i++) {
-            if (ListForHints[i].capital.match(regex)) {
-                console.log(ListForHints[i].capital.match(regex));
+            if ((ListForHints[i].capital.match(regex) && listSize <= 10) || (ListForHints[i].name.match(regex) && listSize <= 10)) {
+                console.log('capital');
                 newID++;
-                newResultList.push({ id: newID, text: ListForHints[i].capital });
+                newResultList.push({ id: newID, text: `${ListForHints[i].name},  ${ListForHints[i].capital}` });
                 listSize++;
             }
         }
@@ -124,7 +123,6 @@ const Clock = () => {
     }
     useEffect(() => {
         updateHintsList();
-        console.log(resultListArray.current);
     }, [enteredText]);
 
     return (
@@ -182,7 +180,6 @@ const Clock = () => {
                     <div class="preview-time__sub-timer">14:34</div>
                 </button>
             </div>
-            <button onClick={updateHintsList}>erererere</button>
         </div>
     );
 };
