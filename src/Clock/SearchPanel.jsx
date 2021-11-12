@@ -17,6 +17,7 @@ const SaerchPanel = (props) => {
         { id: 3, text: 'Russian Federation, Moscow', latlng: [60, 100] },
     ]);
     const latlngRef = useRef([0, 0]);
+    const refInput = useRef();
 
     const [hintsListUpdate, setHintsListUpdate] = useState();
     const domNode = useRef();
@@ -36,11 +37,6 @@ const SaerchPanel = (props) => {
 
         setHintsListUpdate(hintsList);
     }
-    function test() {
-        for (let i = 0; i < ListForHints.length; i++) {
-            console.log(ListForHints[i].latlng, i);
-        }
-    }
 
     function UpdateInput(event) {
         let temporally = event.target.value;
@@ -52,6 +48,7 @@ const SaerchPanel = (props) => {
 
     function changeInputDate(index, last, latLng) {
         if (selectState) {
+            console.log(index);
             counterRow.current = index;
             if (last == true && index == -1) {
                 setEnteredText(searchDate.current.enteredText);
@@ -145,16 +142,18 @@ const SaerchPanel = (props) => {
     function hideHintsresult(event) {
         if (!domNode.current.contains(event.target)) {
             hitsList.current.classList.remove('hintsList');
-        } else {
-            console.log('dfd');
+            refInput.current.blur();
         }
     }
 
     function apiRequestDate() {
+        hitsList.current.classList.remove('hintsList');
+        refInput.current.blur();
         console.log('api request', latlngRef.current);
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&lat=${latlngRef.current[0]}&long=${latlngRef.current[1]}`)
             .then((response) => response.json())
             .then((commints) => {
+                console.log('first');
                 props.FunCalcDifferenceTime(commints);
             });
     }
@@ -171,14 +170,13 @@ const SaerchPanel = (props) => {
     );
     return (
         <div className="search" ref={domNode}>
-            <input type="text" onFocus={focusInput} class="search__input" placeholder="Search by country or capital" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} class="search__input" placeholder="Search by country or capital" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
             <button class="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
             <ul className="search__result" ref={hitsList}>
                 {hintsListUpdate}
             </ul>
-            <button onClick={() => props.FunCalcDifferenceTime()}>werty</button>
         </div>
     );
 };
