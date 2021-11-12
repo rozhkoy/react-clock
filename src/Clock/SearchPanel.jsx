@@ -1,6 +1,6 @@
 import react, { useContext, useEffect, useRef, useState } from 'react';
 import { countryListObject } from '../App';
-const SaerchPanel = () => {
+const SaerchPanel = (props) => {
     const ListForHints = useContext(countryListObject);
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
@@ -155,13 +155,8 @@ const SaerchPanel = () => {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&lat=${latlngRef.current[0]}&long=${latlngRef.current[1]}`)
             .then((response) => response.json())
             .then((commints) => {
-                calculationTime(commints);
+                props.FunCalcDifferenceTime(commints);
             });
-    }
-    function calculationTime(obj) {
-        console.log(obj);
-        let string = obj.date_time_ymd;
-        console.log(new Date(), string, new Date(string), Math.floor((new Date() - new Date(obj.date_time_wti)) / (1000 * 60 * 60)));
     }
 
     useEffect(
@@ -183,6 +178,7 @@ const SaerchPanel = () => {
             <ul className="search__result" ref={hitsList}>
                 {hintsListUpdate}
             </ul>
+            <button onClick={() => props.FunCalcDifferenceTime()}>werty</button>
         </div>
     );
 };
