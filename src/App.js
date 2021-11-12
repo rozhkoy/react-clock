@@ -20,12 +20,9 @@ function App() {
 				while(i < commits.length){
 					obj = {
 						index: i,
-						name: commits[i].name,
 						capital: commits[i].capital,
-						latlng: commits[i].latlng,
 					}
-
-					if('capital' in commits[i] && 'latlng' in commits[i] && 'name' in commits[i]){
+					if('capital' in commits[i]){
 						countryList.current.push(obj)	
 					}
 					i++;

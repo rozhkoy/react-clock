@@ -57,7 +57,7 @@ const Clock = () => {
     });
 
     return (
-        <div class="wrap-clock">
+        <div className="wrap-clock">
             <SaerchPanel FunCalcDifferenceTime={calcDifferenceTime} />
             <MainClock time={mainTime} />
             <DateString dateString={dateString} />

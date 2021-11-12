@@ -2,9 +2,9 @@ import react from 'react';
 
 const ClockSectionItem = (props) => {
     return (
-        <div class="clock__section-item">
-            <span class="numer__item">{props.number}</span>
-            <span class="number__desription">{props.description}</span>
+        <div className="clock__section-item">
+            <span className="numer__item">{props.number}</span>
+            <span className="number__desription">{props.description}</span>
         </div>
     );
 };

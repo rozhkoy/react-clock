@@ -1,120 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <title>Document</title>
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-
-<body>
-    <div class="wrap">
-        <div class="timer">
-            <div class="tabs">
-                <button class="timer__button tabs__button ">TIMER</button>
-                <button class="timer__button tabs__button tabs__button--center">STOPWATCH</button>
-                <button class="timer__button tabs__button tabs__button--active">CLOCK</button>
-            </div>
-            <div class="wrap-clock">
-                <div class="clock__section-group">
-                    <div class="clock__section-item">
-                        <span class="numer__item">14</span>
-                        <span class="number__desription">Hrs</span>
-                    </div>
-                    <span class="clock-colon">:</span>
-
-                    <div class="clock__section-item">
-                        <span class="numer__item">54</span>
-                        <span class="number__desription">Min</span>
-                    </div>
-                    <span class="clock-colon">:</span>
-
-                    <div class="clock__section-item">
-                        <span class="numer__item">23</span>
-                        <span class="number__desription">Sec</span>
-                    </div>
+    <body>
+        <div className="wrap">
+            <div className="timer">
+                <div className="tabs">
+                    <button className="timer__button tabs__button ">TIMER</button>
+                    <button className="timer__button tabs__button tabs__button--center">STOPWATCH</button>
+                    <button className="timer__button tabs__button tabs__button--active">CLOCK</button>
                 </div>
-                <p class="clock__date">Sunday, November 07</p>
-                <div class="preview-time">
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            London
+                <div className="wrap-clock">
+                    <div className="clock__section-group">
+                        <div className="clock__section-item">
+                            <span className="numer__item">14</span>
+                            <span className="number__desription">Hrs</span>
                         </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            los-hujantos
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Kyiv
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            London
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Moscow
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Paris
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Paris
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <div class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Tokyo
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </div>
-                    <button onclick="alert('time')" class="preview-time__item">
-                        <div class="preview-time__capital">
-                            Kigalikili
-                        </div>
-                        <div class="preview-time__sub-timer">
-                            14:34
-                        </div>
-                    </button>
+                        <span className="clock-colon">:</span>
 
+                        <div className="clock__section-item">
+                            <span className="numer__item">54</span>
+                            <span className="number__desription">Min</span>
+                        </div>
+                        <span className="clock-colon">:</span>
+
+                        <div className="clock__section-item">
+                            <span className="numer__item">23</span>
+                            <span className="number__desription">Sec</span>
+                        </div>
+                    </div>
+                    <p className="clock__date">Sunday, November 07</p>
+                    <div className="preview-time">
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">London</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">los-hujantos</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">Kyiv</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">London</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">Moscow</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">Paris</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">Paris</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <div className="preview-time__item">
+                            <div className="preview-time__capital">Tokyo</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </div>
+                        <button onclick="alert('time')" className="preview-time__item">
+                            <div className="preview-time__capital">Kigalikili</div>
+                            <div className="preview-time__sub-timer">14:34</div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

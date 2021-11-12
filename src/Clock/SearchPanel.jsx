@@ -11,16 +11,15 @@ const SaerchPanel = (props) => {
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
     const [rusultList, setResultList] = useState([
-        { id: 0, text: 'Ukraine, Kyiv', latlng: [49, 32] },
-        { id: 1, text: 'Belarus, Minsk', latlng: [53, 28] },
-        { id: 2, text: 'Japan,  Tokyo', latlng: [36, 138] },
-        { id: 3, text: 'Russian Federation, Moscow', latlng: [60, 100] },
+        { id: 0, text: 'Kyiv' },
+        { id: 1, text: 'Minsk' },
+        { id: 2, text: 'Tokyo' },
+        { id: 3, text: 'Moscow' },
     ]);
-    const latlngRef = useRef([0, 0]);
     const refInput = useRef();
-
     const [hintsListUpdate, setHintsListUpdate] = useState();
     const domNode = useRef();
+
     function updateHintsList() {
         resultListArray.current.length = 0;
         const hintsList = rusultList.map((Item, index) => (
@@ -28,7 +27,7 @@ const SaerchPanel = (props) => {
                 ref={(elRef) => {
                     resultListArray.current[index] = elRef;
                 }}
-                onClick={() => changeInputDate(Item.id, false, Item.latlng)}
+                onClick={() => changeInputDate(Item.id, false)}
                 key={Item.id}
             >
                 {Item.text}
@@ -46,7 +45,7 @@ const SaerchPanel = (props) => {
         counterRow.current = -1;
     }
 
-    function changeInputDate(index, last, latLng) {
+    function changeInputDate(index, last) {
         if (selectState) {
             console.log(index);
             counterRow.current = index;
@@ -58,7 +57,6 @@ const SaerchPanel = (props) => {
                 let offerResult = rusultList[index].text;
                 setEnteredText(offerResult);
             }
-            latlngRef.current = latLng;
             setSelectState(true);
         }
     }
@@ -66,7 +64,6 @@ const SaerchPanel = (props) => {
     function hintSelection(event) {
         //  to bottom
         if (event.keyCode === 13) {
-            console.log(latlngRef.current);
             apiRequestDate();
         }
 
@@ -116,15 +113,15 @@ const SaerchPanel = (props) => {
         let listSize = 0;
 
         for (let i = 0; i < ListForHints.length; i++) {
-            if ((ListForHints[i].capital.match(regex) && listSize <= 10) || (ListForHints[i].name.match(regex) && listSize <= 10)) {
+            if (ListForHints[i].capital.match(regex) && listSize <= 10) {
+                newResultList.push({ id: newID, text: `${ListForHints[i].capital}` });
                 newID++;
-
-                newResultList.push({ id: newID, text: `${ListForHints[i].name},  ${ListForHints[i].capital}`, latlng: ListForHints[i].latlng });
                 listSize++;
             }
         }
         if (newResultList.length === 0) {
-            newResultList.push({ id: newID, text: 'No search results', latLong: [0, 0] });
+            hitsList.current.classList.remove('hintsList');
+            newResultList.push({ id: newID, text: 'No search results' });
             setSelectState(false);
         } else {
             setSelectState(true);
@@ -149,8 +146,8 @@ const SaerchPanel = (props) => {
     function apiRequestDate() {
         hitsList.current.classList.remove('hintsList');
         refInput.current.blur();
-        console.log('api request', latlngRef.current);
-        fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&lat=${latlngRef.current[0]}&long=${latlngRef.current[1]}`)
+        console.log('api request');
+        fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
                 console.log('first');
@@ -170,8 +167,8 @@ const SaerchPanel = (props) => {
     );
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} class="search__input" placeholder="Search by country or capital" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
-            <button class="search__bttn" onClick={apiRequestDate}>
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by country or capital" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
+            <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
             <ul className="search__result" ref={hitsList}>

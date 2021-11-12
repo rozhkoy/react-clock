@@ -16,13 +16,13 @@ const TimerSectionItem = (props) => {
         props.updateNumber('plus');
     }
     return (
-        <div class="timer__section-item">
-            <button class=" timer__button button__plus" onClick={plus}>
+        <div className="timer__section-item">
+            <button className=" timer__button button__plus" onClick={plus}>
                 <img src={arrow} alt="" />
             </button>
-            <span class="numer__item">{indicator < 10 ? '0' + indicator : indicator}</span>
-            <span class="number__desription">{props.desription}</span>
-            <button class=" timer__button button__minus" onClick={minus}>
+            <span className="numer__item">{indicator < 10 ? '0' + indicator : indicator}</span>
+            <span className="number__desription">{props.desription}</span>
+            <button className=" timer__button button__minus" onClick={minus}>
                 <img src={arrow} alt="" />
             </button>
         </div>
