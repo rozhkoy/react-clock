@@ -62,11 +62,11 @@ const SaerchPanel = (props) => {
     }
 
     function hintSelection(event) {
-        //  to bottom
+        // enter
         if (event.keyCode === 13) {
             apiRequestDate();
         }
-
+        //  to bottom
         if (selectState) {
             if (event.keyCode === 40) {
                 resultListArray.current[rusultList.length - 1].classList.remove('active__list');
@@ -111,7 +111,6 @@ const SaerchPanel = (props) => {
         let newID = 0;
         let newResultList = [];
         let listSize = 0;
-
         for (let i = 0; i < ListForHints.length; i++) {
             if (ListForHints[i].capital.match(regex) && listSize <= 10) {
                 newResultList.push({ id: newID, text: `${ListForHints[i].capital}` });
