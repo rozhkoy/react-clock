@@ -1,9 +1,9 @@
 import react from 'react';
 
-const DateString = () => {
+const DateString = (props) => {
     return (
         <div>
-            <p class="clock__date">Sunday, November 07</p>
+            <p class="clock__date">{props.dateString}</p>
         </div>
     );
 };
