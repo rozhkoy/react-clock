@@ -37,8 +37,10 @@ const TimerC = () => {
         if (StateTimer) {
             timer = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
-                if (calculateMili.currentMili <= 0) {
+                console.log(calculateMili.currentMili);
+                if (Math.floor(calculateMili.currentMili * 0.001) <= 0) {
                     clearInterval(timer);
+                    timerStop();
                     console.log('end');
                     showMesseges('end');
                 }
