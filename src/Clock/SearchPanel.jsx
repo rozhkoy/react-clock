@@ -152,7 +152,7 @@ const SaerchPanel = (props) => {
             .then((commints) => {
                 console.log('first', commints.geo);
                 if ('ip' in commints.geo) {
-                    showMesseges('Oops, no such country found');
+                    showMesseges('Oops, no such city found');
                 } else {
                     props.FunCalcDifferenceTime(commints);
                 }
@@ -171,7 +171,7 @@ const SaerchPanel = (props) => {
     );
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by country or capital" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
