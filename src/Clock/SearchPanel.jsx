@@ -1,7 +1,10 @@
-import react, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { countryListObject } from '../App';
+import { ContextPopupMesseges } from '../Wrap/Wrap';
+
 const SaerchPanel = (props) => {
     const ListForHints = useContext(countryListObject);
+    const showMesseges = useContext(ContextPopupMesseges);
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
     const searchDate = useRef({ enteredText: '' });
@@ -47,7 +50,6 @@ const SaerchPanel = (props) => {
 
     function changeInputDate(index, last) {
         if (selectState) {
-            console.log(index);
             counterRow.current = index;
             if (last == true && index == -1) {
                 setEnteredText(searchDate.current.enteredText);
@@ -126,7 +128,6 @@ const SaerchPanel = (props) => {
             setSelectState(true);
         }
         listSize = 0;
-        console.log(newResultList);
         setResultList(newResultList);
         updateHintsList();
     }
@@ -145,12 +146,16 @@ const SaerchPanel = (props) => {
     function apiRequestDate() {
         hitsList.current.classList.remove('hintsList');
         refInput.current.blur();
-        console.log('api request');
+        console.log('api request', enteredText);
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
-                console.log('first');
-                props.FunCalcDifferenceTime(commints);
+                console.log('first', commints.geo);
+                if ('ip' in commints.geo) {
+                    showMesseges('Oops, no such country found');
+                } else {
+                    props.FunCalcDifferenceTime(commints);
+                }
             });
     }
 
