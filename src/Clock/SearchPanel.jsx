@@ -8,9 +8,7 @@ const SaerchPanel = (props) => {
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
     const searchDate = useRef({ enteredText: '' });
-    const [showHints, setShowHints] = useState(false);
     const [enteredText, setEnteredText] = useState('');
-    const searchInput = useRef('null');
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
     const [rusultList, setResultList] = useState([
@@ -51,9 +49,9 @@ const SaerchPanel = (props) => {
     function changeInputDate(index, last) {
         if (selectState) {
             counterRow.current = index;
-            if (last == true && index == -1) {
+            if (last === true && index === -1) {
                 setEnteredText(searchDate.current.enteredText);
-            } else if (last == true && index == rusultList.length) {
+            } else if (last === true && index === rusultList.length) {
                 setEnteredText(searchDate.current.enteredText);
             } else {
                 let offerResult = rusultList[index].text;
@@ -92,7 +90,7 @@ const SaerchPanel = (props) => {
                     counterRow.current = rusultList.length - 1;
                     resultListArray.current[0].classList.remove('active__list');
                 }
-                if (counterRow.current == -1) {
+                if (counterRow.current === -1) {
                     changeInputDate(counterRow.current, true);
                     counterRow.current = rusultList.length;
                     resultListArray.current[0].classList.remove('active__list');

@@ -1,12 +1,9 @@
-import react, { createContext, useEffect, useRef, useState } from 'react';
-import useForceUpdate from 'use-force-update';
+import { createContext, useRef, useState } from 'react';
 import Popup from '../Popup/Popup';
 export const ContextPopupMesseges = createContext();
 
 const Wrap = (props) => {
-    const update = useForceUpdate();
     const [popupMesseges, setMesseges] = useState('');
-    const [popupState, setPopupState] = useState(true);
     const child = useRef();
     const handleOnClick = () => {
         if (child.current) {

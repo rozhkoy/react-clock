@@ -1,10 +1,9 @@
-import react, { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import Clock from '../Clock/Clock';
-import Stopwatch from '../Stopwatch/Stopwatch';
 import TimerC from '../Timer/Timer';
 import { ContextPopupMesseges } from '../Wrap/Wrap';
 const TabsButton = () => {
-    const [selectTab, setTab] = useState(2);
+    const [selectTab, setTab] = useState(1);
     const timer = useRef(null);
     const clock = useRef(null);
     const [StateTimer, setStateTimer] = useState(false);
@@ -14,7 +13,6 @@ const TabsButton = () => {
     let timerInterval;
     const endDate = useRef(0);
     const startDate = useRef(0);
-    let assignmentMili;
     let calculateMili = {
         hourse: 0,
         minut: 0,
@@ -36,6 +34,9 @@ const TabsButton = () => {
                 timer.current.classList.add('tabs__button--active');
                 clock.current.classList.remove('tabs__button--active');
                 setTab(2);
+                break;
+            default:
+                setTab(1);
                 break;
         }
     }
@@ -66,6 +67,7 @@ const TabsButton = () => {
                 setTimerSecond(calculateMili.second);
             }, 200);
         }
+
         optionTab();
 
         return () => {
@@ -88,7 +90,7 @@ const TabsButton = () => {
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (TimerHourse == 24) {
+                    if (TimerHourse === 24) {
                         setTimerHourse(0);
                     } else {
                         setTimerHourse((TimerHourse) => TimerHourse + 1);
@@ -96,6 +98,9 @@ const TabsButton = () => {
                 } else {
                     showMesseges('The timer is running, if you want to change the time, leave the timer');
                 }
+                break;
+            default:
+                setTimerHourse(0);
                 break;
         }
     };
@@ -115,7 +120,7 @@ const TabsButton = () => {
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (TimerMinut == 60) {
+                    if (TimerMinut === 60) {
                         setTimerMinut(0);
                     } else {
                         setTimerMinut((TimerMinut) => TimerMinut + 1);
@@ -123,6 +128,9 @@ const TabsButton = () => {
                 } else {
                     showMesseges('The timer is running, if you want to change the time, leave the timer');
                 }
+                break;
+            default:
+                setTimerMinut(0);
                 break;
         }
     };
@@ -151,11 +159,14 @@ const TabsButton = () => {
                     showMesseges('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
+            default:
+                setTimerSecond(0);
+                break;
         }
     };
 
     function timerStart() {
-        if (TimerHourse == 0 && TimerMinut == 0 && TimerSecond == 0) {
+        if (TimerHourse === 0 && TimerMinut === 0 && TimerSecond === 0) {
             showMesseges(() => 'Please, select time');
         } else {
             calculationDate();
@@ -194,8 +205,8 @@ const TabsButton = () => {
                     TIMER
                 </button>
             </div>
-            {selectTab == 1 && <Clock />}
-            {selectTab == 2 && <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond} timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse} updateMinut={updateMinut} updateSecond={updateSecond} />}
+            {selectTab === 1 && <Clock />}
+            {selectTab === 2 && <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond} timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse} updateMinut={updateMinut} updateSecond={updateSecond} />}
         </div>
     );
 };

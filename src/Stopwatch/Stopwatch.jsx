@@ -1,30 +1,28 @@
-import react from 'react';
-import ListLap from './ListLap';
-import { useState } from 'react';
-import StopwatchSectionItem from './StopwatchSectionItem';
+// import ListLap from './ListLap';
 
-const Stopwatch = () => {
-    const [hourse, setHpurse] = useState(1);
-    return (
-        <div className="wrap-stop-watch">
-            <div className="stop-watch__section-group">
-                <StopwatchSectionItem desription={'Hrs'} />
-                <span className="stop-watch-colon">:</span>
-                <StopwatchSectionItem desription={'Min'} />
-                <span className="stop-watch-colon">:</span>
-                <StopwatchSectionItem desription={'Sec'} />
-                <span className="stop-watch-colon">:</span>
-                <StopwatchSectionItem desription={'Ms'} />
-            </div>
-            <div className="stop-watch-button__group">
-                <button className="timer__button timer__button--one timer__button--start">Start</button>
-                <button className="timer__button timer__button--two timer__button--stop">Stop</button>
-                <button className="timer__button timer__button--three timer__button--stop">Lap</button>
-                <button className="timer__button timer__button--four timer__button--reset">Reset</button>
-            </div>
-            <ListLap />
-        </div>
-    );
-};
+// import StopwatchSectionItem from './StopwatchSectionItem';
 
-export default Stopwatch;
+// const Stopwatch = () => {
+//     return (
+//         <div className="wrap-stop-watch">
+//             <div className="stop-watch__section-group">
+//                 <StopwatchSectionItem desription={'Hrs'} />
+//                 <span className="stop-watch-colon">:</span>
+//                 <StopwatchSectionItem desription={'Min'} />
+//                 <span className="stop-watch-colon">:</span>
+//                 <StopwatchSectionItem desription={'Sec'} />
+//                 <span className="stop-watch-colon">:</span>
+//                 <StopwatchSectionItem desription={'Ms'} />
+//             </div>
+//             <div className="stop-watch-button__group">
+//                 <button className="timer__button timer__button--one timer__button--start">Start</button>
+//                 <button className="timer__button timer__button--two timer__button--stop">Stop</button>
+//                 <button className="timer__button timer__button--three timer__button--stop">Lap</button>
+//                 <button className="timer__button timer__button--four timer__button--reset">Reset</button>
+//             </div>
+//             <ListLap />
+//         </div>
+//     );
+// };
+
+// export default Stopwatch;

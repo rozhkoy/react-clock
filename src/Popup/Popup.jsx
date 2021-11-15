@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import useForceUpdate from 'use-force-update';
+import { useRef, forwardRef, useImperativeHandle } from 'react';
 
 const Popup = forwardRef((props, ref) => {
     const popupState = useRef(false);

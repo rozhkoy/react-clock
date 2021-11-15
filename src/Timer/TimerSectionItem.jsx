@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import arrow from './arrow.svg';
 
 const TimerSectionItem = (props) => {

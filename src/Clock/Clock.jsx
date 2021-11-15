@@ -1,15 +1,12 @@
-import react, { useContext, useEffect, useRef, useState } from 'react';
-import ClockSectionItem from './ClocksectionItem';
-import { DateTime, Settings } from 'luxon';
-import { countryListObject } from '../App';
+import { useEffect, useRef, useState } from 'react';
+
+import { DateTime } from 'luxon';
 import SaerchPanel from './SearchPanel';
 import MainClock from './MainClock';
 import DateString from './DateString';
 
 const Clock = () => {
-    const dataDate = useRef({
-        // date: DateTime.local().setLocale('en').toFormat('DDDD'),
-    });
+    const dataDate = useRef({});
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));

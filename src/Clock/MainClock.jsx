@@ -1,4 +1,3 @@
-import react from 'react';
 import ClockSectionItem from './ClocksectionItem';
 
 const MainClock = (props) => {

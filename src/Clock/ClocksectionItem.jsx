@@ -1,5 +1,3 @@
-import react from 'react';
-
 const ClockSectionItem = (props) => {
     return (
         <div className="clock__section-item">

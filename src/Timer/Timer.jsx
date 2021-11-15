@@ -1,7 +1,4 @@
-import react, { useContext, useEffect, useRef } from 'react';
-import { useState } from 'react';
 import TimerSectionItem from './TimerSectionItem';
-import { Timer } from 'ez-timer';
 
 const TimerC = (props) => {
     return (
