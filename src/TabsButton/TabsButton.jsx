@@ -65,7 +65,7 @@ const TabsButton = () => {
                 setTimerHourse(calculateMili.hourse);
                 setTimerMinut(calculateMili.minut);
                 setTimerSecond(calculateMili.second);
-            }, 200);
+            }, 250);
         }
 
         optionTab();
@@ -170,7 +170,6 @@ const TabsButton = () => {
             showMesseges(() => 'Please, select time');
         } else {
             calculationDate();
-            console.log('start');
             if (!StateTimer) {
                 setStateTimer(true);
             } else {
@@ -180,7 +179,6 @@ const TabsButton = () => {
     }
 
     function timerStop() {
-        console.log(StateTimer, 'stop');
         if (StateTimer) {
             setStateTimer(false);
         } else {

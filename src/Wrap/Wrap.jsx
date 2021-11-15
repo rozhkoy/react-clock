@@ -1,5 +1,6 @@
 import { createContext, useRef, useState } from 'react';
 import Popup from '../Popup/Popup';
+import github from './github.svg';
 export const ContextPopupMesseges = createContext();
 
 const Wrap = (props) => {
@@ -20,6 +21,9 @@ const Wrap = (props) => {
             <div className="wrap">
                 {props.children}
                 <Popup ref={child} messeges={popupMesseges} />
+                <a href="https://github.com/zolir18" class="link_github">
+                    <img src={github} alt="" />
+                </a>
             </div>
         </ContextPopupMesseges.Provider>
     );
