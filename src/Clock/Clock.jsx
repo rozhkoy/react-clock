@@ -1,60 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
 
-import { DateTime } from 'luxon';
-import SaerchPanel from './SearchPanel';
+import SearchPanel from './SearchPanel';
 import MainClock from './MainClock';
 import DateString from './DateString';
+import TimeZoneSaved from "./TimeZoneSaved";
 
-const Clock = () => {
-    const dataDate = useRef({});
-    const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
-    const [useOtherTime, setUseOtherTime] = useState(false);
-    const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
 
-    function calcDifferenceTime(dateObject) {
-        dataDate.current = {};
-        dataDate.current.difference = Math.floor((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
-        dataDate.current.fullDate = dateObject.date_time_txt;
-        setUseOtherTime(true);
-    }
 
-    function setTime(time) {
-        setMainTimer(time.split(':'));
-    }
 
-    useEffect(() => {
-        let timer;
-        timer = setInterval(() => {
-            if (useOtherTime) {
-                if (dataDate.current.difference < 0) {
-                    dataDate.current.dateTime = DateTime.local().plus({ hours: dataDate.current.difference * -1, minutes: 0 });
-
-                    setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
-
-                    dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
-                    setTime(dataDate.current.time);
-                } else {
-                    dataDate.current.dateTime = DateTime.local().minus({ hours: dataDate.current.difference, minutes: 0 });
-
-                    setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
-                    dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
-                    setTime(dataDate.current.time);
-                }
-            } else {
-                setMainTimer(DateTime.local().toFormat('TT').split(':'));
-            }
-        }, 1000);
-
-        return () => {
-            if (timer) clearInterval(timer);
-        };
-    });
+const Clock = (props) => {
 
     return (
         <div className="wrap-clock">
-            <SaerchPanel FunCalcDifferenceTime={calcDifferenceTime} />
-            <MainClock time={mainTime} />
-            <DateString dateString={dateString} />
+            <SearchPanel FunCalcDifferenceTime={props.calcDifferenceTime} />
+            <MainClock time={props.mainTime} />
+            <DateString dateString={props.dateString} />
+            <TimeZoneSaved />
         </div>
     );
 };

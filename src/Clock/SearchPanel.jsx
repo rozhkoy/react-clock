@@ -65,6 +65,7 @@ const SaerchPanel = (props) => {
         // enter
         if (event.keyCode === 13) {
             apiRequestDate();
+            console.log('add');
         }
         //  to bottom
         if (selectState) {
@@ -144,11 +145,10 @@ const SaerchPanel = (props) => {
     function apiRequestDate() {
         hitsList.current.classList.remove('hintsList');
         refInput.current.blur();
-        console.log('api request', enteredText);
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
-                console.log('first', commints.geo);
+                console.log(commints);
                 if ('ip' in commints.geo) {
                     showMesseges('Oops, no such city found');
                 } else {

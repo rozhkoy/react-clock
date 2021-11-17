@@ -1,7 +1,10 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import {useEffect, useRef, useState, useContext} from 'react';
 import Clock from '../Clock/Clock';
 import TimerC from '../Timer/Timer';
-import { ContextPopupMesseges } from '../Wrap/Wrap';
+import {ContextPopupMesseges} from '../Wrap/Wrap';
+import {DateTime} from "luxon";
+
+
 const TabsButton = () => {
     const [selectTab, setTab] = useState(1);
     const timer = useRef(null);
@@ -20,8 +23,24 @@ const TabsButton = () => {
         mili: 0,
         currentMili: 0,
     };
+    const dataDate = useRef({});
+    const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
+    const [useOtherTime, setUseOtherTime] = useState(false);
+    const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
+
 
     const showMesseges = useContext(ContextPopupMesseges);
+
+    function calcDifferenceTime(dateObject) {
+        dataDate.current = {};
+        dataDate.current.difference = Math.floor((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
+        dataDate.current.fullDate = dateObject.date_time_txt;
+        setUseOtherTime(true);
+    }
+
+    function setTime(time) {
+        setMainTimer(time.split(':'));
+    }
 
     function optionTab() {
         switch (selectTab) {
@@ -43,13 +62,32 @@ const TabsButton = () => {
 
     function calculationDate() {
         startDate.current = new Date();
-
         calculateMili.mili = TimerHourse * 60 * 60 * 1000 + TimerMinut * 60 * 1000 + TimerSecond * 1000;
-
         endDate.current = calculateMili.mili + Date.now();
     }
 
     useEffect(() => {
+        let timer;
+        timer = setInterval(() => {
+            if (useOtherTime) {
+                if (dataDate.current.difference < 0) {
+                    dataDate.current.dateTime = DateTime.local().plus({ hours: dataDate.current.difference * -1, minutes: 0 });
+
+                    setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
+
+                    dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
+                    setTime(dataDate.current.time);
+                } else {
+                    dataDate.current.dateTime = DateTime.local().minus({ hours: dataDate.current.difference, minutes: 0 });
+
+                    setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
+                    dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
+                    setTime(dataDate.current.time);
+                }
+            } else {
+                setMainTimer(DateTime.local().toFormat('TT').split(':'));
+            }
+        }, 1000)
         console.log(StateTimer);
         if (StateTimer) {
             timerInterval = setInterval(() => {
@@ -59,7 +97,7 @@ const TabsButton = () => {
                     timerStop();
                     showMesseges('Time is up');
                 }
-                calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60));
+                calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60))
                 calculateMili.minut = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
                 calculateMili.second = Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60;
                 setTimerHourse(calculateMili.hourse);
@@ -68,10 +106,12 @@ const TabsButton = () => {
             }, 250);
         }
 
+
         optionTab();
 
         return () => {
             clearInterval(timerInterval);
+            if (timer) clearInterval(timer);
         };
     }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab]);
 
@@ -203,8 +243,12 @@ const TabsButton = () => {
                     TIMER
                 </button>
             </div>
-            {selectTab === 1 && <Clock />}
-            {selectTab === 2 && <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond} timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse} updateMinut={updateMinut} updateSecond={updateSecond} />}
+            {selectTab === 1 &&
+            <Clock calcDifferenceTime={calcDifferenceTime}  mainTime={mainTime} dataString={dateString}/>}
+            {selectTab === 2 &&
+            <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
+                    timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}
+                    updateMinut={updateMinut} updateSecond={updateSecond}/>}
         </div>
     );
 };
