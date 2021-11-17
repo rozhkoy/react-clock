@@ -152,7 +152,8 @@ const SaerchPanel = (props) => {
                 if ('ip' in commints.geo) {
                     showMesseges('Oops, no such city found');
                 } else {
-                    props.FunCalcDifferenceTime(commints);
+                    props.FunCalcDifferenceTime(commints,enteredText);
+                    setEnteredText('')
                 }
             });
     }

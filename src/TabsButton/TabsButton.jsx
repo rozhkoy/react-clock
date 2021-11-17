@@ -25,17 +25,27 @@ const TabsButton = () => {
     };
     const dataDate = useRef({});
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
+    const [cityName, setCityName] = useState('local time')
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
-
-
     const showMesseges = useContext(ContextPopupMesseges);
+    const [sevedCity, setSavedcity] = useState([]);
 
-    function calcDifferenceTime(dateObject) {
+    function calcDifferenceTime(dateObject, name) {
+        setCityName(name);
         dataDate.current = {};
         dataDate.current.difference = Math.floor((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
         dataDate.current.fullDate = dateObject.date_time_txt;
         setUseOtherTime(true);
+        console.log(dataDate.current.difference);
+    }
+
+    function addCity(){
+        let add = sevedCity.slice();
+
+        add.push({id: add.length, city: cityName})
+        setSavedcity(add);
+        console.log(add)
     }
 
     function setTime(time) {
@@ -87,6 +97,9 @@ const TabsButton = () => {
             } else {
                 setMainTimer(DateTime.local().toFormat('TT').split(':'));
             }
+            console.log(useOtherTime);
+
+
         }, 1000)
         console.log(StateTimer);
         if (StateTimer) {
@@ -113,7 +126,7 @@ const TabsButton = () => {
             clearInterval(timerInterval);
             if (timer) clearInterval(timer);
         };
-    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab]);
+    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
@@ -244,7 +257,7 @@ const TabsButton = () => {
                 </button>
             </div>
             {selectTab === 1 &&
-            <Clock calcDifferenceTime={calcDifferenceTime}  mainTime={mainTime} dataString={dateString}/>}
+            <Clock addCity={addCity} calcDifferenceTime={calcDifferenceTime} cityName={cityName}  mainTime={mainTime} dataString={dateString}/>}
             {selectTab === 2 &&
             <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
                     timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}
