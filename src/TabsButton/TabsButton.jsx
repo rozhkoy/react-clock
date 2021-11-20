@@ -29,7 +29,12 @@ const TabsButton = () => {
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMesseges = useContext(ContextPopupMesseges);
-    const [sevedCity, setSavedcity] = useState([]);
+    const [savedCity, setSavedcity] = useState([]);
+    const savedCityList = useRef([
+        {id: 1, city: "huj"},
+        {id: 2, city: "huj"},
+        {id: 3, city: "huj"},
+    ]);
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -41,12 +46,24 @@ const TabsButton = () => {
     }
 
     function addCity(){
-        let add = sevedCity.slice();
-
+        let add = savedCity.slice();
         add.push({id: add.length, city: cityName})
-        setSavedcity(add);
         console.log(add)
+        setSavedcity(add);
+        console.log(savedCity);
+        showSavedCity();
     }
+
+    function showSavedCity(){
+        console.log("check",savedCity);
+            savedCityList.current = savedCity.map((item)=>(
+                <li key={item.id} className="preview-time__item">
+                    {item.city}
+                </li>
+                )
+            )
+        }
+
 
     function setTime(time) {
         setMainTimer(time.split(':'));
@@ -97,7 +114,7 @@ const TabsButton = () => {
             } else {
                 setMainTimer(DateTime.local().toFormat('TT').split(':'));
             }
-            console.log(useOtherTime);
+
 
 
         }, 1000)
@@ -126,7 +143,7 @@ const TabsButton = () => {
             clearInterval(timerInterval);
             if (timer) clearInterval(timer);
         };
-    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime]);
+    }, [StateTimer, setSavedcity, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
@@ -262,6 +279,8 @@ const TabsButton = () => {
             <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
                     timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}
                     updateMinut={updateMinut} updateSecond={updateSecond}/>}
+
+            <ul>{savedCityList</ul>
         </div>
     );
 };
