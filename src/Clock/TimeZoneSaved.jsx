@@ -1,8 +1,8 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const TimeZoneSaved = (props) => {
 
-
+    useEffect(()=>{},[props.saveCityList])
     return (
         // <div className="preview-time">
         //     <div className="preview-time__item">
@@ -10,7 +10,8 @@ const TimeZoneSaved = (props) => {
         //         <div className="preview-time__sub-timer">14:34</div>
         //     </div>
         // </div>
-    <ul className="preview-time">{props.saveCityList}</ul>
+    <ul className="preview-time">
+         {props.saveCityList}</ul>
     )
 
 }

@@ -29,9 +29,7 @@ const TabsButton = () => {
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMesseges = useContext(ContextPopupMesseges);
-    const [savedCity, setSavedcity] = useState([
-        {id:0, city:"last"}
-    ]);
+    const [savedCity, setSavedcity] = useState([]);
     const [saveCityList, setSaveCityList] = useState()
 
 
@@ -45,26 +43,26 @@ const TabsButton = () => {
     }
 
     function addCity(){
+        console.log("adddd")
         let add = savedCity.slice();
         add.push({id: add.length, city: cityName})
-        console.log(add)
-        setSavedcity(add);
-        console.log(savedCity);
-        showSavedCity();
-    }
-
-    function showSavedCity(){
-        console.log("check",savedCity);
-            let array = savedCity.map((item)=>(
+        let array = add.map((item)=>(
                 <li key={item.id} className="preview-time__item">
                     {item.city}
                 </li>
-                )
             )
+        )
+        setSavedcity(add);
         setSaveCityList(array);
-        console.log(array);
+
     }
 
+    // function showSavedCity(){
+    //     console.log("check",savedCity);
+    //
+    //     setSaveCityList(array);
+    //     console.log(array);
+    // }
 
     function setTime(time) {
         setMainTimer(time.split(':'));
@@ -119,7 +117,7 @@ const TabsButton = () => {
 
 
         }, 1000)
-        console.log(StateTimer);
+ 
         if (StateTimer) {
             timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
@@ -144,7 +142,7 @@ const TabsButton = () => {
             clearInterval(timerInterval);
             if (timer) clearInterval(timer);
         };
-    }, [StateTimer, setSavedcity, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime]);
+    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime, saveCityList, savedCity]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
