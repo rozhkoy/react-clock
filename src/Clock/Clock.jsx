@@ -15,7 +15,7 @@ const Clock = (props) => {
             <CityName cityName={props.cityName} addCity={props.addCity}/>
             <MainClock time={props.mainTime}/>
             <DateString dateString={props.dateString}/>
-            <TimeZoneSaved/>
+            <TimeZoneSaved saveCityList={props.saveCityList} />
         </div>
     );
 };

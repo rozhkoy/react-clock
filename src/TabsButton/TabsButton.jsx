@@ -29,12 +29,11 @@ const TabsButton = () => {
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMesseges = useContext(ContextPopupMesseges);
-    const [savedCity, setSavedcity] = useState([]);
-    const savedCityList = useRef([
-        {id: 1, city: "huj"},
-        {id: 2, city: "huj"},
-        {id: 3, city: "huj"},
+    const [savedCity, setSavedcity] = useState([
+        {id:0, city:"last"}
     ]);
+    const [saveCityList, setSaveCityList] = useState()
+
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -56,13 +55,15 @@ const TabsButton = () => {
 
     function showSavedCity(){
         console.log("check",savedCity);
-            savedCityList.current = savedCity.map((item)=>(
+            let array = savedCity.map((item)=>(
                 <li key={item.id} className="preview-time__item">
                     {item.city}
                 </li>
                 )
             )
-        }
+        setSaveCityList(array);
+        console.log(array);
+    }
 
 
     function setTime(time) {
@@ -274,13 +275,12 @@ const TabsButton = () => {
                 </button>
             </div>
             {selectTab === 1 &&
-            <Clock addCity={addCity} calcDifferenceTime={calcDifferenceTime} cityName={cityName}  mainTime={mainTime} dataString={dateString}/>}
+            <Clock saveCityList={saveCityList} addCity={addCity} calcDifferenceTime={calcDifferenceTime} cityName={cityName}  mainTime={mainTime} dataString={dateString}/>}
             {selectTab === 2 &&
             <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
                     timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}
                     updateMinut={updateMinut} updateSecond={updateSecond}/>}
 
-            <ul>{savedCityList</ul>
         </div>
     );
 };
