@@ -264,7 +264,7 @@ body {
     align-items: end;
     justify-content: center;
     width: fit-content;
-    padding: 10px 15px;
+    padding: 5px 10px;
     border: 1px solid rgb(206, 198, 198);
     margin: 10px 0 0 10px;
     background: #ececec;
@@ -375,6 +375,17 @@ body {
     position: relative;
 }
 
+.first-level{
+    font-size: 12px;
+}
+.second-level {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.third-level{
+    font-size: 18px ;
+}
 @media (max-width: 680px) {
     .link_github {
         position: absolute;

@@ -28,7 +28,7 @@ const TabsButton = () => {
 
     });
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
-    const [cityName, setCityName] = useState('local time')
+    const [cityName, setCityName] = useState('Local time')
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMesseges = useContext(ContextPopupMesseges);
@@ -48,19 +48,24 @@ const TabsButton = () => {
 
     function addCity() {
         let add = savedCity.slice();
-
         add.push({id: add.length, city: cityName, difference: dataDate.current.difference, dateTime: DateTime.local().toFormat('T')})
         console.log(add);
-
+        add.reverse()
         showListSavedCity(add)
         setSavedCity(add);
-
-
+    }
+    function deleteCity(id){
+         let arr = savedCity.slice()
+        console.log(arr)
+         arr.splice(id ,1)
+        console.log(arr)
+        setSavedCity(arr)
+        showListSavedCity(arr)
     }
 
     function showListSavedCity(arrayCity){
         let array = arrayCity.map((item) => (
-                <li key={item.id} className="preview-time__item">
+                <li onClick={()=> deleteCity(item.id)} key={item.id} className="preview-time__item">
                     <div className="first-level"><span>&#x2715;</span></div>
                     <div className="second-level">{item.city}</div>
                     <div className="third-level">{item.dateTime}</div>
@@ -71,12 +76,10 @@ const TabsButton = () => {
     }
 
     function uppDataDateInSavedCity() {
-        console.log("updata");
-        if (savedCity.length > 0) {
 
+        if (savedCity.length > 0) {
             for (let i = 0; i < savedCity.length; i++) {
                 let newArray = savedCity.slice();
-
                 if (newArray[i].difference < 0) {
                     newArray[i].dateTime = DateTime.local().plus({
                         hours: newArray[i].difference * -1,
@@ -87,9 +90,7 @@ const TabsButton = () => {
                         hours: newArray[i].difference,
                         minutes: 0
                     }).toFormat('T');
-
                 }
-                console.log(newArray)
                 setSavedCity(newArray);
             }
         }
@@ -127,7 +128,7 @@ const TabsButton = () => {
     useEffect(() => {
         let timer;
         let upDateSaveTimer;
-        showListSavedCity(savedCity);
+
         timer = setInterval(() => {
             if (useOtherTime) {
                 if (dataDate.current.difference < 0) {
@@ -177,6 +178,7 @@ const TabsButton = () => {
 
         upDateSaveTimer = setInterval(()=>{
             uppDataDateInSavedCity()
+            showListSavedCity(savedCity)
         }, 1000)
 
 
