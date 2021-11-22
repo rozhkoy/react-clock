@@ -23,13 +23,18 @@ const TabsButton = () => {
         mili: 0,
         currentMili: 0,
     };
-    const dataDate = useRef({});
+    const dataDate = useRef({
+        difference: 0,
+
+    });
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
     const [cityName, setCityName] = useState('local time')
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMesseges = useContext(ContextPopupMesseges);
-    const [savedCity, setSavedcity] = useState([]);
+    const [savedCity, setSavedCity] = useState([
+        // {id: 0, city: 'Local time', difference: 0, dateTime: DateTime.local().toFormat('T') }
+    ]);
     const [saveCityList, setSaveCityList] = useState()
 
 
@@ -39,30 +44,57 @@ const TabsButton = () => {
         dataDate.current.difference = Math.floor((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
         dataDate.current.fullDate = dateObject.date_time_txt;
         setUseOtherTime(true);
-        console.log(dataDate.current.difference);
     }
 
-    function addCity(){
-        console.log("adddd")
+    function addCity() {
         let add = savedCity.slice();
-        add.push({id: add.length, city: cityName})
-        let array = add.map((item)=>(
+
+        add.push({id: add.length, city: cityName, difference: dataDate.current.difference, dateTime: DateTime.local().toFormat('T')})
+        console.log(add);
+
+        showListSavedCity(add)
+        setSavedCity(add);
+
+
+    }
+
+    function showListSavedCity(arrayCity){
+        let array = arrayCity.map((item) => (
                 <li key={item.id} className="preview-time__item">
-                    {item.city}
+                    <div className="first-level"><span>&#x2715;</span></div>
+                    <div className="second-level">{item.city}</div>
+                    <div className="third-level">{item.dateTime}</div>
                 </li>
             )
         )
-        setSavedcity(add);
         setSaveCityList(array);
-
     }
 
-    // function showSavedCity(){
-    //     console.log("check",savedCity);
-    //
-    //     setSaveCityList(array);
-    //     console.log(array);
-    // }
+    function uppDataDateInSavedCity() {
+        console.log("updata");
+        if (savedCity.length > 0) {
+
+            for (let i = 0; i < savedCity.length; i++) {
+                let newArray = savedCity.slice();
+
+                if (newArray[i].difference < 0) {
+                    newArray[i].dateTime = DateTime.local().plus({
+                        hours: newArray[i].difference * -1,
+                        minutes: 0
+                    }).toFormat('T');
+                } else {
+                    newArray[i].dateTime = DateTime.local().minus({
+                        hours: newArray[i].difference,
+                        minutes: 0
+                    }).toFormat('T');
+
+                }
+                console.log(newArray)
+                setSavedCity(newArray);
+            }
+        }
+    }
+
 
     function setTime(time) {
         setMainTimer(time.split(':'));
@@ -94,17 +126,25 @@ const TabsButton = () => {
 
     useEffect(() => {
         let timer;
+        let upDateSaveTimer;
+        showListSavedCity(savedCity);
         timer = setInterval(() => {
             if (useOtherTime) {
                 if (dataDate.current.difference < 0) {
-                    dataDate.current.dateTime = DateTime.local().plus({ hours: dataDate.current.difference * -1, minutes: 0 });
+                    dataDate.current.dateTime = DateTime.local().plus({
+                        hours: dataDate.current.difference * -1,
+                        minutes: 0
+                    });
 
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
 
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
                     setTime(dataDate.current.time);
                 } else {
-                    dataDate.current.dateTime = DateTime.local().minus({ hours: dataDate.current.difference, minutes: 0 });
+                    dataDate.current.dateTime = DateTime.local().minus({
+                        hours: dataDate.current.difference,
+                        minutes: 0
+                    });
 
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
@@ -117,7 +157,7 @@ const TabsButton = () => {
 
 
         }, 1000)
- 
+
         if (StateTimer) {
             timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
@@ -135,14 +175,21 @@ const TabsButton = () => {
             }, 250);
         }
 
+        upDateSaveTimer = setInterval(()=>{
+            uppDataDateInSavedCity()
+        }, 1000)
+
+
 
         optionTab();
-
+        uppDataDateInSavedCity()
         return () => {
             clearInterval(timerInterval);
+            clearInterval(upDateSaveTimer)
             if (timer) clearInterval(timer);
+
         };
-    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime, saveCityList, savedCity]);
+    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime, saveCityList, savedCity.dateTime ]);
 
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
@@ -273,7 +320,8 @@ const TabsButton = () => {
                 </button>
             </div>
             {selectTab === 1 &&
-            <Clock saveCityList={saveCityList} addCity={addCity} calcDifferenceTime={calcDifferenceTime} cityName={cityName}  mainTime={mainTime} dataString={dateString}/>}
+            <Clock saveCityList={saveCityList} addCity={addCity} calcDifferenceTime={calcDifferenceTime}
+                   cityName={cityName} mainTime={mainTime} dateString={dateString}/>}
             {selectTab === 2 &&
             <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
                     timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}

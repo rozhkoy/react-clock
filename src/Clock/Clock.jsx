@@ -11,6 +11,7 @@ const Clock = (props) => {
 
     return (
         <div className="wrap-clock">
+
             <SearchPanel FunCalcDifferenceTime={props.calcDifferenceTime}/>
             <CityName cityName={props.cityName} addCity={props.addCity}/>
             <MainClock time={props.mainTime}/>
