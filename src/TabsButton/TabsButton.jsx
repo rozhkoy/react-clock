@@ -50,15 +50,14 @@ const TabsButton = () => {
         let add = savedCity.slice();
         add.push({id: add.length, city: cityName, difference: dataDate.current.difference, dateTime: DateTime.local().toFormat('T')})
         console.log(add);
-        add.reverse()
         showListSavedCity(add)
         setSavedCity(add);
     }
-    function deleteCity(id){
-         let arr = savedCity.slice()
-        console.log(arr)
-         arr.splice(id ,1)
-        console.log(arr)
+    function deleteCity(idElem){
+        let arr = savedCity.slice()
+        console.log("before", arr, idElem)
+        arr = arr.filter(obj => obj.id != idElem);
+        console.log("after", arr, idElem, "====================")
         setSavedCity(arr)
         showListSavedCity(arr)
     }
@@ -69,6 +68,7 @@ const TabsButton = () => {
                     <div className="first-level"><span>&#x2715;</span></div>
                     <div className="second-level">{item.city}</div>
                     <div className="third-level">{item.dateTime}</div>
+                    {item.id}
                 </li>
             )
         )
