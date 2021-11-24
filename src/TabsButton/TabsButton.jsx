@@ -5,10 +5,14 @@ import {ContextPopupMesseges} from '../Wrap/Wrap';
 import {DateTime} from "luxon";
 
 
+
 const TabsButton = () => {
     const [selectTab, setTab] = useState(1);
     const timer = useRef(null);
     const clock = useRef(null);
+
+
+    // for timer
     const [StateTimer, setStateTimer] = useState(false);
     const [TimerHourse, setTimerHourse] = useState(0);
     const [TimerMinut, setTimerMinut] = useState(0);
@@ -25,7 +29,6 @@ const TabsButton = () => {
     };
     const dataDate = useRef({
         difference: 0,
-
     });
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
     const [cityName, setCityName] = useState('Local time')
@@ -35,7 +38,7 @@ const TabsButton = () => {
     const [savedCity, setSavedCity] = useState([
         // {id: 0, city: 'Local time', difference: 0, dateTime: DateTime.local().toFormat('T') }
     ]);
-    const [saveCityList, setSaveCityList] = useState()
+
 
 
     function calcDifferenceTime(dateObject, name) {
@@ -48,38 +51,29 @@ const TabsButton = () => {
 
     function addCity() {
         let add = savedCity.slice();
-        add.push({id: add.length, city: cityName, difference: dataDate.current.difference, dateTime: DateTime.local().toFormat('T')})
+        add.push({
+            id: add.length,
+            city: cityName,
+            difference: dataDate.current.difference,
+            dateTime: DateTime.local().toFormat('T')
+        })
         console.log(add);
-        showListSavedCity(add)
         setSavedCity(add);
     }
-    function deleteCity(idElem){
+
+    function deleteCity(idElem) {
         let arr = savedCity.slice()
         console.log("before", arr, idElem)
         arr = arr.filter(obj => obj.id != idElem);
         console.log("after", arr, idElem, "====================")
         setSavedCity(arr)
-        showListSavedCity(arr)
-    }
-
-    function showListSavedCity(arrayCity){
-        let array = arrayCity.map((item) => (
-                <li onClick={()=> deleteCity(item.id)} key={item.id} className="preview-time__item">
-                    <div className="first-level"><span>&#x2715;</span></div>
-                    <div className="second-level">{item.city}</div>
-                    <div className="third-level">{item.dateTime}</div>
-                    {item.id}
-                </li>
-            )
-        )
-        setSaveCityList(array);
     }
 
     function uppDataDateInSavedCity() {
-
+        let newArray
         if (savedCity.length > 0) {
             for (let i = 0; i < savedCity.length; i++) {
-                let newArray = savedCity.slice();
+                newArray = savedCity.slice();
                 if (newArray[i].difference < 0) {
                     newArray[i].dateTime = DateTime.local().plus({
                         hours: newArray[i].difference * -1,
@@ -91,9 +85,10 @@ const TabsButton = () => {
                         minutes: 0
                     }).toFormat('T');
                 }
-                setSavedCity(newArray);
             }
+            setSavedCity(newArray);
         }
+
     }
 
 
@@ -176,23 +171,22 @@ const TabsButton = () => {
             }, 250);
         }
 
-        upDateSaveTimer = setInterval(()=>{
+        upDateSaveTimer = setInterval(() => {
             uppDataDateInSavedCity()
-            showListSavedCity(savedCity)
         }, 1000)
 
 
 
         optionTab();
-        uppDataDateInSavedCity()
         return () => {
             clearInterval(timerInterval);
             clearInterval(upDateSaveTimer)
             if (timer) clearInterval(timer);
 
         };
-    }, [StateTimer, TimerHourse, TimerMinut, TimerSecond, selectTab, useOtherTime, saveCityList, savedCity.dateTime ]);
+    });
 
+    // for timer
     const updateHourse = function (plusMinus) {
         switch (plusMinus) {
             case 'minus':
@@ -223,7 +217,7 @@ const TabsButton = () => {
         }
     };
 
-    const updateMinut = function (plusMinus) {
+    const updateMinute = function (plusMinus) {
         switch (plusMinus) {
             case 'minus':
                 if (!StateTimer) {
@@ -321,13 +315,26 @@ const TabsButton = () => {
                     TIMER
                 </button>
             </div>
+
             {selectTab === 1 &&
-            <Clock saveCityList={saveCityList} addCity={addCity} calcDifferenceTime={calcDifferenceTime}
-                   cityName={cityName} mainTime={mainTime} dateString={dateString}/>}
+            <Clock addCity={addCity}
+                   calcDifferenceTime={calcDifferenceTime}
+                   savedCity={savedCity}
+                   cityName={cityName}
+                   mainTime={mainTime}
+                   deleteCity={deleteCity}
+                   dateString={dateString}/>}
             {selectTab === 2 &&
-            <TimerC StateTimer={StateTimer} TimerHourse={TimerHourse} TimerMinut={TimerMinut} TimerSecond={TimerSecond}
-                    timerReset={timerReset} timerStop={timerStop} timerStart={timerStart} updateHourse={updateHourse}
-                    updateMinut={updateMinut} updateSecond={updateSecond}/>}
+            <TimerC StateTimer={StateTimer}
+                    TimerHourse={TimerHourse}
+                    TimerMinut={TimerMinut}
+                    TimerSecond={TimerSecond}
+                    timerReset={timerReset}
+                    timerStop={timerStop}
+                    timerStart={timerStart}
+                    updateHourse={updateHourse}
+                    updateMinut={updateMinute}
+                    updateSecond={updateSecond}/>}
 
         </div>
     );

@@ -371,8 +371,19 @@ body {
     text-transform: uppercase;
 
 }
+.first-level__remove-city{
+    background: transparent;
+    border: none;
+    padding: 0px 2px;
+
+}
+
+.first-level__remove-city:hover{
+    background: rgb(193, 193, 193); ;
+}
 .wrap-city-name{
     position: relative;
+
 }
 
 .first-level{
