@@ -61,7 +61,7 @@ const SearchPanel = (props) => {
         }
     }
 
-    function hintSelection(event) {
+    function selectionHints(event) {
         // enter
         if (event.keyCode === 13) {
             apiRequestDate();
@@ -135,7 +135,7 @@ const SearchPanel = (props) => {
         hitsList.current.classList.add('hintsList');
     }
 
-    function hideHintsresult(event) {
+    function hideHintsResult(event) {
         if (!domNode.current.contains(event.target)) {
             hitsList.current.classList.remove('hintsList');
             refInput.current.blur();
@@ -159,15 +159,15 @@ const SearchPanel = (props) => {
 
     useEffect(
         (event) => {
-            document.addEventListener('mousedown', hideHintsresult);
+            document.addEventListener('mousedown', hideHintsResult);
             updateHintsList();
             return () => {
-                document.removeEventListener('mousedown', hideHintsresult);
+                document.removeEventListener('mousedown', hideHintsResult);
             };
         }, [enteredText]);
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={UpdateInput} />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
