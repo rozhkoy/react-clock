@@ -153,7 +153,6 @@ const SaerchPanel = (props) => {
                     showMesseges('Oops, no such city found');
                 } else {
                     props.FunCalcDifferenceTime(commints,enteredText);
-                    setEnteredText('')
                 }
             });
     }

@@ -5,8 +5,8 @@ import {ContextPopupMesseges} from '../Wrap/Wrap';
 import {DateTime} from "luxon";
 
 
-
 const TabsButton = () => {
+    //change tab
     const [selectTab, setTab] = useState(1);
     const timer = useRef(null);
     const clock = useRef(null);
@@ -14,15 +14,15 @@ const TabsButton = () => {
 
     // for timer
     const [StateTimer, setStateTimer] = useState(false);
-    const [TimerHourse, setTimerHourse] = useState(0);
-    const [TimerMinut, setTimerMinut] = useState(0);
+    const [TimerHours, setTimerHours] = useState(0);
+    const [TimerMinute, setTimerMinute] = useState(0);
     const [TimerSecond, setTimerSecond] = useState(0);
     let timerInterval;
     const endDate = useRef(0);
     const startDate = useRef(0);
     let calculateMili = {
         hourse: 0,
-        minut: 0,
+        minute: 0,
         second: 0,
         mili: 0,
         currentMili: 0,
@@ -34,7 +34,7 @@ const TabsButton = () => {
     const [cityName, setCityName] = useState('Local time')
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
-    const showMesseges = useContext(ContextPopupMesseges);
+    const showMessage = useContext(ContextPopupMesseges);
     const [savedCity, setSavedCity] = useState([
         // {id: 0, city: 'Local time', difference: 0, dateTime: DateTime.local().toFormat('T') }
     ]);
@@ -64,7 +64,7 @@ const TabsButton = () => {
     function deleteCity(idElem) {
         let arr = savedCity.slice()
         console.log("before", arr, idElem)
-        arr = arr.filter(obj => obj.id != idElem);
+        arr = arr.filter(obj => obj.id !== idElem);
         console.log("after", arr, idElem, "====================")
         setSavedCity(arr)
     }
@@ -92,10 +92,6 @@ const TabsButton = () => {
     }
 
 
-    function setTime(time) {
-        setMainTimer(time.split(':'));
-    }
-
     function optionTab() {
         switch (selectTab) {
             case 1:
@@ -116,71 +112,59 @@ const TabsButton = () => {
 
     function calculationDate() {
         startDate.current = new Date();
-        calculateMili.mili = TimerHourse * 60 * 60 * 1000 + TimerMinut * 60 * 1000 + TimerSecond * 1000;
+        calculateMili.mili = TimerHours * 60 * 60 * 1000 + TimerMinute * 60 * 1000 + TimerSecond * 1000;
         endDate.current = calculateMili.mili + Date.now();
     }
 
     useEffect(() => {
+        console.log(useOtherTime);
         let timer;
-        let upDateSaveTimer;
 
         timer = setInterval(() => {
+            uppDataDateInSavedCity()
             if (useOtherTime) {
                 if (dataDate.current.difference < 0) {
                     dataDate.current.dateTime = DateTime.local().plus({
                         hours: dataDate.current.difference * -1,
                         minutes: 0
                     });
-
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
-
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
-                    setTime(dataDate.current.time);
+                    setMainTimer(dataDate.current.time.split(':'));
                 } else {
                     dataDate.current.dateTime = DateTime.local().minus({
                         hours: dataDate.current.difference,
                         minutes: 0
                     });
-
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
-                    setTime(dataDate.current.time);
+                    setMainTimer(dataDate.current.time.split(':'));
                 }
             } else {
                 setMainTimer(DateTime.local().toFormat('TT').split(':'));
             }
-
-
-
         }, 1000)
 
         if (StateTimer) {
-            timerInterval = setInterval(() => {
+          timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
                 if (Math.floor(calculateMili.currentMili * 0.001) <= 0) {
                     clearInterval(timer);
                     timerStop();
-                    showMesseges('Time is up');
+                    showMessage('Time is up');
                 }
                 calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60))
-                calculateMili.minut = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
+                calculateMili.minute = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
                 calculateMili.second = Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60;
-                setTimerHourse(calculateMili.hourse);
-                setTimerMinut(calculateMili.minut);
+                setTimerHours(calculateMili.hourse);
+                setTimerMinute(calculateMili.minute);
                 setTimerSecond(calculateMili.second);
             }, 250);
         }
 
-        upDateSaveTimer = setInterval(() => {
-            uppDataDateInSavedCity()
-        }, 1000)
-
-
-
         optionTab();
         return () => {
             clearInterval(timerInterval);
-            clearInterval(upDateSaveTimer)
             if (timer) clearInterval(timer);
 
         };
@@ -191,28 +175,28 @@ const TabsButton = () => {
         switch (plusMinus) {
             case 'minus':
                 if (!StateTimer) {
-                    if (TimerHourse <= 0) {
-                        setTimerHourse(24);
+                    if (TimerHours <= 0) {
+                        setTimerHours(24);
                     } else {
-                        setTimerHourse((TimerHourse) => TimerHourse - 1);
+                        setTimerHours((TimerHourse) => TimerHourse - 1)
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (TimerHourse === 24) {
-                        setTimerHourse(0);
+                    if (TimerHours === 24) {
+                        setTimerHours(0);
                     } else {
-                        setTimerHourse((TimerHourse) => TimerHourse + 1);
+                        setTimerHours((TimerHourse) => TimerHourse + 1);
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             default:
-                setTimerHourse(0);
+                setTimerHours(0);
                 break;
         }
     };
@@ -221,28 +205,28 @@ const TabsButton = () => {
         switch (plusMinus) {
             case 'minus':
                 if (!StateTimer) {
-                    if (TimerMinut <= 0) {
-                        setTimerMinut(60);
+                    if (TimerMinute <= 0) {
+                        setTimerMinute(60);
                     } else {
-                        setTimerMinut((TimerMinut) => TimerMinut - 1);
+                        setTimerMinute((TimerMinut) => TimerMinut - 1);
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             case 'plus':
                 if (!StateTimer) {
-                    if (TimerMinut === 60) {
-                        setTimerMinut(0);
+                    if (TimerMinute === 60) {
+                        setTimerMinute(0);
                     } else {
-                        setTimerMinut((TimerMinut) => TimerMinut + 1);
+                        setTimerMinute((TimerMinut) => TimerMinut + 1);
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             default:
-                setTimerMinut(0);
+                setTimerMinute(0);
                 break;
         }
     };
@@ -257,7 +241,7 @@ const TabsButton = () => {
                         setTimerSecond((TimerSecond) => TimerSecond - 1);
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             case 'plus':
@@ -268,7 +252,7 @@ const TabsButton = () => {
                         setTimerSecond((TimerSecond) => TimerSecond + 1);
                     }
                 } else {
-                    showMesseges('The timer is running, if you want to change the time, leave the timer');
+                    showMessage('The timer is running, if you want to change the time, leave the timer');
                 }
                 break;
             default:
@@ -278,14 +262,14 @@ const TabsButton = () => {
     };
 
     function timerStart() {
-        if (TimerHourse === 0 && TimerMinut === 0 && TimerSecond === 0) {
-            showMesseges(() => 'Please, select time');
+        if (TimerHours === 0 && TimerMinute === 0 && TimerSecond === 0) {
+            showMessage(() => 'Please, select time');
         } else {
             calculationDate();
             if (!StateTimer) {
                 setStateTimer(true);
             } else {
-                showMesseges(() => 'Ohh, Timer started');
+                showMessage(() => 'Ohh, Timer started');
             }
         }
     }
@@ -294,13 +278,13 @@ const TabsButton = () => {
         if (StateTimer) {
             setStateTimer(false);
         } else {
-            showMesseges('Ohh, timer stoped');
+            showMessage('Ohh, timer stoped');
         }
     }
 
     function timerReset() {
-        setTimerHourse(0);
-        setTimerMinut(0);
+        setTimerHours(0);
+        setTimerMinute(0);
         setTimerSecond(0);
         setStateTimer(false);
     }
@@ -326,8 +310,8 @@ const TabsButton = () => {
                    dateString={dateString}/>}
             {selectTab === 2 &&
             <TimerC StateTimer={StateTimer}
-                    TimerHourse={TimerHourse}
-                    TimerMinut={TimerMinut}
+                    TimerHourse={TimerHours}
+                    TimerMinut={TimerMinute}
                     TimerSecond={TimerSecond}
                     timerReset={timerReset}
                     timerStop={timerStop}
