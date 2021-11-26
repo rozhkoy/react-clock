@@ -1,16 +1,14 @@
-import {useEffect, useRef, useState, useContext} from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import Clock from '../Clock/Clock';
 import TimerC from '../Timer/Timer';
-import {ContextPopupMesseges} from '../Wrap/Wrap';
-import {DateTime} from "luxon";
-
+import { ContextPopupMesseges } from '../Wrap/Wrap';
+import { DateTime } from 'luxon';
 
 const TabsButton = () => {
     //change tab
     const [selectTab, setTab] = useState(1);
     const timer = useRef(null);
     const clock = useRef(null);
-
 
     // for timer
     const [StateTimer, setStateTimer] = useState(false);
@@ -31,7 +29,7 @@ const TabsButton = () => {
         difference: 0,
     });
     const [dateString, setDateString] = useState(DateTime.local().setLocale('en').toFormat('DDDD'));
-    const [cityName, setCityName] = useState('Local time')
+    const [cityName, setCityName] = useState('Local time');
     const [useOtherTime, setUseOtherTime] = useState(false);
     const [mainTime, setMainTimer] = useState(DateTime.local().toFormat('TT').split(':'));
     const showMessage = useContext(ContextPopupMesseges);
@@ -39,31 +37,28 @@ const TabsButton = () => {
         // {id: 0, city: 'Local time', difference: 0, dateTime: DateTime.local().toFormat('T') }
     ]);
 
-
-    function comebackHouse(){
-        searchByCityName(" ")
+    function comebackHouse() {
+        searchByCityName(' ');
     }
 
-    function searchBySavedCity(cityName){
-            searchByCityName(cityName)
+    function searchBySavedCity(cityName) {
+        searchByCityName(cityName);
     }
 
-
-    function searchByCityName(cityName){
+    function searchByCityName(cityName) {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
             .then((response) => response.json())
             .then((commints) => {
                 if ('ip' in commints.geo) {
-                    setCityName('Local time')
+                    setCityName('Local time');
                     setUseOtherTime(false);
                     setMainTimer(DateTime.local().toFormat('TT').split(':'));
                     setDateString(DateTime.local().setLocale('en').toFormat('DDDD'));
                 } else {
-                    calcDifferenceTime(commints, cityName)
+                    calcDifferenceTime(commints, cityName);
                 }
             });
     }
-
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -79,38 +74,41 @@ const TabsButton = () => {
             id: add.length,
             city: cityName,
             difference: dataDate.current.difference,
-            dateTime: DateTime.local().toFormat('T')
-        })
+            dateTime: DateTime.local().toFormat('T'),
+        });
 
         setSavedCity(add);
     }
 
     function deleteSavedCity(idElem) {
-        let arr = savedCity.slice()
-        arr = arr.filter(obj => obj.id !== idElem);
-        setSavedCity(arr)
+        let arr = savedCity.slice();
+        arr = arr.filter((obj) => obj.id !== idElem);
+        setSavedCity(arr);
     }
 
     function uppDataDateInSavedCity() {
-        let newArray
+        let newArray;
         if (savedCity.length > 0) {
             for (let i = 0; i < savedCity.length; i++) {
                 newArray = savedCity.slice();
                 if (newArray[i].difference < 0) {
-                    newArray[i].dateTime = DateTime.local().plus({
-                        hours: newArray[i].difference * -1,
-                        minutes: 0
-                    }).toFormat('T');
+                    newArray[i].dateTime = DateTime.local()
+                        .plus({
+                            hours: newArray[i].difference * -1,
+                            minutes: 0,
+                        })
+                        .toFormat('T');
                 } else {
-                    newArray[i].dateTime = DateTime.local().minus({
-                        hours: newArray[i].difference,
-                        minutes: 0
-                    }).toFormat('T');
+                    newArray[i].dateTime = DateTime.local()
+                        .minus({
+                            hours: newArray[i].difference,
+                            minutes: 0,
+                        })
+                        .toFormat('T');
                 }
             }
             setSavedCity(newArray);
         }
-
     }
 
     function optionTab() {
@@ -141,12 +139,12 @@ const TabsButton = () => {
         let timer;
 
         timer = setInterval(() => {
-            uppDataDateInSavedCity()
+            uppDataDateInSavedCity();
             if (useOtherTime) {
                 if (dataDate.current.difference < 0) {
                     dataDate.current.dateTime = DateTime.local().plus({
                         hours: dataDate.current.difference * -1,
-                        minutes: 0
+                        minutes: 0,
                     });
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
@@ -154,7 +152,7 @@ const TabsButton = () => {
                 } else {
                     dataDate.current.dateTime = DateTime.local().minus({
                         hours: dataDate.current.difference,
-                        minutes: 0
+                        minutes: 0,
                     });
                     setDateString(dataDate.current.dateTime.setLocale('en').toFormat('DDDD'));
                     dataDate.current.time = dataDate.current.dateTime.setLocale('en').toFormat('TT');
@@ -163,19 +161,21 @@ const TabsButton = () => {
             } else {
                 setMainTimer(DateTime.local().toFormat('TT').split(':'));
             }
-        }, 1000)
+        }, 1000);
 
         if (StateTimer) {
-          timerInterval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
                 if (Math.floor(calculateMili.currentMili * 0.001) <= 0) {
                     clearInterval(timer);
                     timerStop();
                     showMessage('Time is up');
                 }
-                calculateMili.hours = Math.floor(calculateMili.currentMili / (1000 * 60 * 60))
+                calculateMili.hours = Math.floor(calculateMili.currentMili / (1000 * 60 * 60));
                 calculateMili.minute = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hours * 60;
-                calculateMili.second = Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60;
+                calculateMili.second =
+                    Math.floor(calculateMili.currentMili / 1000) -
+                    Math.floor(calculateMili.currentMili / (1000 * 60)) * 60;
                 setTimerHours(calculateMili.hours);
                 setTimerMinute(calculateMili.minute);
                 setTimerSecond(calculateMili.second);
@@ -186,7 +186,6 @@ const TabsButton = () => {
         return () => {
             clearInterval(timerInterval);
             if (timer) clearInterval(timer);
-
         };
     });
 
@@ -198,7 +197,7 @@ const TabsButton = () => {
                     if (TimerHours <= 0) {
                         setTimerHours(24);
                     } else {
-                        setTimerHours((TimerHourse) => TimerHourse - 1)
+                        setTimerHours((TimerHourse) => TimerHourse - 1);
                     }
                 } else {
                     showMessage('The timer is running, if you want to change the time, leave the timer');
@@ -320,20 +319,21 @@ const TabsButton = () => {
                 </button>
             </div>
 
-            {selectTab === 1 &&
+            {selectTab === 1 && (
                 <Clock
-                   calcDifferenceTime={calcDifferenceTime}
-                   addCityInList={addCityInList}
-                   cityName={cityName}
-                   mainTime={mainTime}
-                   savedCity={savedCity}
-                   deleteSavedCity={deleteSavedCity}
-                   comebackHouse={comebackHouse}
-                   searchBySavedCity={searchBySavedCity}
-                   dateString={dateString}/>
-            }
+                    calcDifferenceTime={calcDifferenceTime}
+                    addCityInList={addCityInList}
+                    cityName={cityName}
+                    mainTime={mainTime}
+                    savedCity={savedCity}
+                    deleteSavedCity={deleteSavedCity}
+                    comebackHouse={comebackHouse}
+                    searchBySavedCity={searchBySavedCity}
+                    dateString={dateString}
+                />
+            )}
 
-            {selectTab === 2 &&
+            {selectTab === 2 && (
                 <TimerC
                     StateTimer={StateTimer}
                     TimerHours={TimerHours}
@@ -344,7 +344,9 @@ const TabsButton = () => {
                     timerStart={timerStart}
                     updateHours={updateHours}
                     updateMinute={updateMinute}
-                    updateSecond={updateSecond}/>}
+                    updateSecond={updateSecond}
+                />
+            )}
         </div>
     );
 };
