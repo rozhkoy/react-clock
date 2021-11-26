@@ -40,16 +40,16 @@ const TabsButton = () => {
     ]);
 
 
-    function comebackHouse(){
+    function comebackHouse() {
         searchByCityName(" ")
     }
 
-    function searchBySavedCity(cityName){
-            searchByCityName(cityName)
+    function searchBySavedCity(cityName) {
+        searchByCityName(cityName)
     }
 
 
-    function searchByCityName(cityName){
+    function searchByCityName(cityName) {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
             .then((response) => response.json())
             .then((commints) => {
@@ -63,7 +63,6 @@ const TabsButton = () => {
                 }
             });
     }
-
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -166,7 +165,7 @@ const TabsButton = () => {
         }, 1000)
 
         if (StateTimer) {
-          timerInterval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
                 if (Math.floor(calculateMili.currentMili * 0.001) <= 0) {
                     clearInterval(timer);
@@ -321,30 +320,30 @@ const TabsButton = () => {
             </div>
 
             {selectTab === 1 &&
-                <Clock
-                   calcDifferenceTime={calcDifferenceTime}
-                   addCityInList={addCityInList}
-                   cityName={cityName}
-                   mainTime={mainTime}
-                   savedCity={savedCity}
-                   deleteSavedCity={deleteSavedCity}
-                   comebackHouse={comebackHouse}
-                   searchBySavedCity={searchBySavedCity}
-                   dateString={dateString}/>
+            <Clock
+                calcDifferenceTime={calcDifferenceTime}
+                addCityInList={addCityInList}
+                cityName={cityName}
+                mainTime={mainTime}
+                savedCity={savedCity}
+                deleteSavedCity={deleteSavedCity}
+                comebackHouse={comebackHouse}
+                searchBySavedCity={searchBySavedCity}
+                dateString={dateString}/>
             }
 
             {selectTab === 2 &&
-                <TimerC
-                    StateTimer={StateTimer}
-                    TimerHours={TimerHours}
-                    TimerMinute={TimerMinute}
-                    TimerSecond={TimerSecond}
-                    timerReset={timerReset}
-                    timerStop={timerStop}
-                    timerStart={timerStart}
-                    updateHours={updateHours}
-                    updateMinute={updateMinute}
-                    updateSecond={updateSecond}/>}
+            <TimerC
+                StateTimer={StateTimer}
+                TimerHours={TimerHours}
+                TimerMinute={TimerMinute}
+                TimerSecond={TimerSecond}
+                timerReset={timerReset}
+                timerStop={timerStop}
+                timerStart={timerStart}
+                updateHours={updateHours}
+                updateMinute={updateMinute}
+                updateSecond={updateSecond}/>}
         </div>
     );
 };

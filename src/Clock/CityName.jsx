@@ -8,13 +8,13 @@ function CityName(props) {
     }
 
     return (
-    <div className='wrap-city-name'>
-        <p className="city-name">{props.cityName}</p>
-        <div className="bttn-group">
-            <ComebackHouse comebackHouse={props.comebackHouse}/>
-            <BttnAdd onClick={props.addCityInList}/>
-        </div>
-    </div>);
+        <div className='wrap-city-name'>
+            <p className="city-name">{props.cityName}</p>
+            <div className="bttn-group">
+                <ComebackHouse comebackHouse={props.comebackHouse}/>
+                <BttnAdd onClick={props.addCityInList}/>
+            </div>
+        </div>);
 }
 
 export default CityName;
