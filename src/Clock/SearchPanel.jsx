@@ -1,21 +1,21 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { countryListObject } from '../App';
-import { ContextPopupMesseges } from '../Wrap/Wrap';
+import {useContext, useEffect, useRef, useState} from 'react';
+import {countryListObject} from '../App';
+import {ContextPopupMesseges} from '../Wrap/Wrap';
 
 const SearchPanel = (props) => {
     const listForHints = useContext(countryListObject);
     const showMessage = useContext(ContextPopupMesseges);
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
-    const searchDate = useRef({ enteredText: '' });
+    const searchDate = useRef({enteredText: ''});
     const [enteredText, setEnteredText] = useState('');
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
     const [resultsList, setResultList] = useState([
-        { id: 0, text: 'Kyiv' },
-        { id: 1, text: 'Minsk' },
-        { id: 2, text: 'Tokyo' },
-        { id: 3, text: 'Moscow' },
+        {id: 0, text: 'Kiev'},
+        {id: 1, text: 'Minsk'},
+        {id: 2, text: 'Tokyo'},
+        {id: 3, text: 'Moscow'},
     ]);
     const refInput = useRef();
     const [hintsListUpdate, setHintsListUpdate] = useState();
@@ -68,7 +68,6 @@ const SearchPanel = (props) => {
             apiRequestDate();
         }
         //  to bottom
-        console.log(selectState);
         if (selectState) {
             if (event.keyCode === 40) {
                 resultListArray.current[resultsList.length - 1].classList.remove('active__list');
@@ -115,14 +114,14 @@ const SearchPanel = (props) => {
         let listSize = 0;
         for (let i = 0; i < listForHints.length; i++) {
             if (listForHints[i].capital.match(regex) && listSize <= 10) {
-                newResultList.push({ id: newID, text: `${listForHints[i].capital}` });
+                newResultList.push({id: newID, text: `${listForHints[i].capital}`});
                 newID++;
                 listSize++;
             }
         }
         if (newResultList.length === 0) {
             hitsList.current.classList.remove('hintsList');
-            newResultList.push({ id: newID, text: 'No search results' });
+            newResultList.push({id: newID, text: 'No search results'});
             setSelectState(false);
         } else {
             setSelectState(true);
@@ -135,6 +134,7 @@ const SearchPanel = (props) => {
     function focusInput() {
         hitsList.current.classList.add('hintsList');
         setSelectState(true)
+
     }
 
     function hideHintsResult(event) {
@@ -151,18 +151,17 @@ const SearchPanel = (props) => {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
-                console.log(commints);
                 if ('ip' in commints.geo) {
                     showMessage('Oops, no such city found');
                 } else {
-                    props.FunCalcDifferenceTime(commints,enteredText);
+                    props.FunCalcDifferenceTime(commints, enteredText);
                 }
                 setSelectState(false)
             });
     }
 
     useEffect(
-        (event) => {
+        () => {
             document.addEventListener('mousedown', hideHintsResult);
             updateHintsList();
             return () => {
@@ -171,7 +170,9 @@ const SearchPanel = (props) => {
         }, [enteredText]);
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={updateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input"
+                   placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText}
+                   onChange={updateInput}/>
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>

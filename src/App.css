@@ -356,16 +356,10 @@ body {
     height: 50px;
 }
 
-.button-add {
-    width: 20px;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
+
 
 .city-name {
-    padding: 20px 0;
+
     font-size: 25px;
     font-weight: 400;
     text-transform: uppercase;
@@ -383,7 +377,24 @@ body {
 }
 .wrap-city-name{
     position: relative;
+    display: grid;
+    padding: 20px 0;
+    grid-template-columns: 1fr fit-content(100%);
 
+    width: 100%;
+}
+.bttn-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    justify-self: end;
+    align-self: center;
+}
+.button-add {
+    width: 20px;
+}
+.comeback-home img{
+    width: 22px;
 }
 
 .first-level{

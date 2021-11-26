@@ -40,6 +40,29 @@ const TabsButton = () => {
     ]);
 
 
+    function comebackHouse() {
+        searchByCityName(" ")
+    }
+
+    function searchBySavedCity(cityName) {
+        searchByCityName(cityName)
+    }
+
+
+    function searchByCityName(cityName) {
+        fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
+            .then((response) => response.json())
+            .then((commints) => {
+                if ('ip' in commints.geo) {
+                    setCityName('Local time')
+                    setUseOtherTime(false);
+                    setMainTimer(DateTime.local().toFormat('TT').split(':'));
+                    setDateString(DateTime.local().setLocale('en').toFormat('DDDD'));
+                } else {
+                    calcDifferenceTime(commints, cityName)
+                }
+            });
+    }
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -57,15 +80,13 @@ const TabsButton = () => {
             difference: dataDate.current.difference,
             dateTime: DateTime.local().toFormat('T')
         })
-        console.log(add);
+
         setSavedCity(add);
     }
 
     function deleteSavedCity(idElem) {
         let arr = savedCity.slice()
-        console.log("before", arr, idElem)
         arr = arr.filter(obj => obj.id !== idElem);
-        console.log("after", arr, idElem, "====================")
         setSavedCity(arr)
     }
 
@@ -90,7 +111,6 @@ const TabsButton = () => {
         }
 
     }
-
 
     function optionTab() {
         switch (selectTab) {
@@ -117,7 +137,6 @@ const TabsButton = () => {
     }
 
     useEffect(() => {
-        console.log(useOtherTime);
         let timer;
 
         timer = setInterval(() => {
@@ -146,7 +165,7 @@ const TabsButton = () => {
         }, 1000)
 
         if (StateTimer) {
-          timerInterval = setInterval(() => {
+            timerInterval = setInterval(() => {
                 calculateMili.currentMili = new Date(endDate.current) - Date.now();
                 if (Math.floor(calculateMili.currentMili * 0.001) <= 0) {
                     clearInterval(timer);
@@ -302,26 +321,29 @@ const TabsButton = () => {
 
             {selectTab === 1 &&
             <Clock
-                   calcDifferenceTime={calcDifferenceTime}
-                   addCityInList={addCityInList}
-                   cityName={cityName}
-                   mainTime={mainTime}
-                   savedCity={savedCity}
-                   deleteSavedCity={deleteSavedCity}
+                calcDifferenceTime={calcDifferenceTime}
+                addCityInList={addCityInList}
+                cityName={cityName}
+                mainTime={mainTime}
+                savedCity={savedCity}
+                deleteSavedCity={deleteSavedCity}
+                comebackHouse={comebackHouse}
+                searchBySavedCity={searchBySavedCity}
+                dateString={dateString}/>
+            }
 
-                   dateString={dateString}/>}
             {selectTab === 2 &&
-            <TimerC StateTimer={StateTimer}
-                    TimerHours={TimerHours}
-                    TimerMinute={TimerMinute}
-                    TimerSecond={TimerSecond}
-                    timerReset={timerReset}
-                    timerStop={timerStop}
-                    timerStart={timerStart}
-                    updateHours={updateHours}
-                    updateMinute={updateMinute}
-                    updateSecond={updateSecond}/>}
-
+            <TimerC
+                StateTimer={StateTimer}
+                TimerHours={TimerHours}
+                TimerMinute={TimerMinute}
+                TimerSecond={TimerSecond}
+                timerReset={timerReset}
+                timerStop={timerStop}
+                timerStart={timerStart}
+                updateHours={updateHours}
+                updateMinute={updateMinute}
+                updateSecond={updateSecond}/>}
         </div>
     );
 };

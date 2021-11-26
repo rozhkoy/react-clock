@@ -1,4 +1,5 @@
 import {BttnAdd} from "./BttnAdd";
+import ComebackHouse from "./ComebackHouse"
 
 
 function CityName(props) {
@@ -7,9 +8,12 @@ function CityName(props) {
     }
 
     return (
-    <div className='wrap-city-name'>
+        <div className='wrap-city-name'>
             <p className="city-name">{props.cityName}</p>
-            <BttnAdd onClick={props.addCityInList}/>
+            <div className="bttn-group">
+                <ComebackHouse comebackHouse={props.comebackHouse}/>
+                <BttnAdd onClick={props.addCityInList}/>
+            </div>
         </div>);
 }
 
