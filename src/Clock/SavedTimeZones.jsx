@@ -6,7 +6,7 @@ const SavedTimeZones = (props) => {
         <ul class="preview-time">
         {
             props.savedCity.map((item) => (
-                <li key={item.id} className="preview-time__item">
+                <li onClick={() => props.searchBySavedCity(item.city)} key={item.id} className="preview-time__item">
                     <div className="first-level"><button className="first-level__remove-city" onClick={() => props.deleteSavedCity(item.id)}>&#x2715;</button></div>
                     <div className="second-level">{item.city}</div>
                     <div className="third-level">{item.dateTime}</div>

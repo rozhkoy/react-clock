@@ -40,6 +40,29 @@ const TabsButton = () => {
     ]);
 
 
+    function comebackHouse(){
+        console.log("comeback")
+        searchByCityName(" ")
+    }
+
+    function searchBySavedCity(cityName){
+            console.log(cityName)
+    }
+
+
+    function searchByCityName(cityName){
+        fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
+            .then((response) => response.json())
+            .then((commints) => {
+                console.log(commints);
+                if ('ip' in commints.geo) {
+                    showMessage('Oops, no such city found');
+                } else {
+                    calcDifferenceTime(commints, cityName)
+                }
+            });
+    }
+
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -90,7 +113,6 @@ const TabsButton = () => {
         }
 
     }
-
 
     function optionTab() {
         switch (selectTab) {
@@ -301,17 +323,21 @@ const TabsButton = () => {
             </div>
 
             {selectTab === 1 &&
-            <Clock
+                <Clock
                    calcDifferenceTime={calcDifferenceTime}
                    addCityInList={addCityInList}
                    cityName={cityName}
                    mainTime={mainTime}
                    savedCity={savedCity}
                    deleteSavedCity={deleteSavedCity}
+                   comebackHouse={comebackHouse}
+                   searchBySavedCity={searchBySavedCity}
+                   dateString={dateString}/>
+            }
 
-                   dateString={dateString}/>}
             {selectTab === 2 &&
-            <TimerC StateTimer={StateTimer}
+                <TimerC
+                    StateTimer={StateTimer}
                     TimerHours={TimerHours}
                     TimerMinute={TimerMinute}
                     TimerSecond={TimerSecond}
@@ -321,7 +347,6 @@ const TabsButton = () => {
                     updateHours={updateHours}
                     updateMinute={updateMinute}
                     updateSecond={updateSecond}/>}
-
         </div>
     );
 };
