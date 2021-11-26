@@ -12,7 +12,7 @@ const SearchPanel = (props) => {
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
     const [resultsList, setResultList] = useState([
-        { id: 0, text: 'Kyiv' },
+        { id: 0, text: 'Kiev' },
         { id: 1, text: 'Minsk' },
         { id: 2, text: 'Tokyo' },
         { id: 3, text: 'Moscow' },
@@ -68,7 +68,6 @@ const SearchPanel = (props) => {
             apiRequestDate();
         }
         //  to bottom
-        console.log(selectState);
         if (selectState) {
             if (event.keyCode === 40) {
                 resultListArray.current[resultsList.length - 1].classList.remove('active__list');
@@ -135,6 +134,7 @@ const SearchPanel = (props) => {
     function focusInput() {
         hitsList.current.classList.add('hintsList');
         setSelectState(true)
+
     }
 
     function hideHintsResult(event) {
@@ -151,7 +151,6 @@ const SearchPanel = (props) => {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
-                console.log(commints);
                 if ('ip' in commints.geo) {
                     showMessage('Oops, no such city found');
                 } else {
@@ -162,7 +161,7 @@ const SearchPanel = (props) => {
     }
 
     useEffect(
-        (event) => {
+        () => {
             document.addEventListener('mousedown', hideHintsResult);
             updateHintsList();
             return () => {

@@ -41,12 +41,10 @@ const TabsButton = () => {
 
 
     function comebackHouse(){
-        console.log("comeback")
         searchByCityName(" ")
     }
 
     function searchBySavedCity(cityName){
-            console.log(cityName)
             searchByCityName(cityName)
     }
 
@@ -55,7 +53,6 @@ const TabsButton = () => {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
             .then((response) => response.json())
             .then((commints) => {
-                console.log(commints);
                 if ('ip' in commints.geo) {
                     setCityName('Local time')
                     setUseOtherTime(false);
@@ -84,15 +81,13 @@ const TabsButton = () => {
             difference: dataDate.current.difference,
             dateTime: DateTime.local().toFormat('T')
         })
-        console.log(add);
+
         setSavedCity(add);
     }
 
     function deleteSavedCity(idElem) {
         let arr = savedCity.slice()
-        console.log("before", arr, idElem)
         arr = arr.filter(obj => obj.id !== idElem);
-        console.log("after", arr, idElem, "====================")
         setSavedCity(arr)
     }
 
@@ -143,7 +138,6 @@ const TabsButton = () => {
     }
 
     useEffect(() => {
-        console.log(useOtherTime);
         let timer;
 
         timer = setInterval(() => {
