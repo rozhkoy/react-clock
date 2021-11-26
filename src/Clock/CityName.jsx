@@ -1,6 +1,5 @@
-import {BttnAdd} from "./BttnAdd";
-import ComebackHouse from "./ComebackHouse"
-
+import { BttnAdd } from './BttnAdd';
+import ComebackHouse from './ComebackHouse';
 
 function CityName(props) {
     function test() {
@@ -8,13 +7,14 @@ function CityName(props) {
     }
 
     return (
-    <div className='wrap-city-name'>
-        <p className="city-name">{props.cityName}</p>
-        <div className="bttn-group">
-            <ComebackHouse comebackHouse={props.comebackHouse}/>
-            <BttnAdd onClick={props.addCityInList}/>
+        <div className="wrap-city-name">
+            <p className="city-name">{props.cityName}</p>
+            <div className="bttn-group">
+                <ComebackHouse comebackHouse={props.comebackHouse} />
+                <BttnAdd onClick={props.addCityInList} />
+            </div>
         </div>
-    </div>);
+    );
 }
 
 export default CityName;
