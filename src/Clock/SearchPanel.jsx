@@ -3,7 +3,7 @@ import { countryListObject } from '../App';
 import { ContextPopupMesseges } from '../Wrap/Wrap';
 
 const SearchPanel = (props) => {
-    const ListForHints = useContext(countryListObject);
+    const listForHints = useContext(countryListObject);
     const showMessage = useContext(ContextPopupMesseges);
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
@@ -11,7 +11,7 @@ const SearchPanel = (props) => {
     const [enteredText, setEnteredText] = useState('');
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
-    const [rusultList, setResultList] = useState([
+    const [resultsList, setResultList] = useState([
         { id: 0, text: 'Kyiv' },
         { id: 1, text: 'Minsk' },
         { id: 2, text: 'Tokyo' },
@@ -23,7 +23,7 @@ const SearchPanel = (props) => {
 
     function updateHintsList() {
         resultListArray.current.length = 0;
-        const hintsList = rusultList.map((Item, index) => (
+        const hintsList = resultsList.map((Item, index) => (
             <li
                 ref={(elRef) => {
                     resultListArray.current[index] = elRef;
@@ -38,12 +38,13 @@ const SearchPanel = (props) => {
         setHintsListUpdate(hintsList);
     }
 
-    function UpdateInput(event) {
+    function updateInput(event) {
         let temporally = event.target.value;
         searchDate.current.enteredText = temporally;
         createHintsList(temporally);
         setEnteredText(temporally);
         counterRow.current = -1;
+        setSelectState(true)
     }
 
     function changeInputDate(index, last) {
@@ -51,10 +52,10 @@ const SearchPanel = (props) => {
             counterRow.current = index;
             if (last === true && index === -1) {
                 setEnteredText(searchDate.current.enteredText);
-            } else if (last === true && index === rusultList.length) {
+            } else if (last === true && index === resultsList.length) {
                 setEnteredText(searchDate.current.enteredText);
             } else {
-                let offerResult = rusultList[index].text;
+                let offerResult = resultsList[index].text;
                 setEnteredText(offerResult);
             }
             setSelectState(true);
@@ -65,20 +66,20 @@ const SearchPanel = (props) => {
         // enter
         if (event.keyCode === 13) {
             apiRequestDate();
-            console.log('add');
         }
         //  to bottom
+        console.log(selectState);
         if (selectState) {
             if (event.keyCode === 40) {
-                resultListArray.current[rusultList.length - 1].classList.remove('active__list');
+                resultListArray.current[resultsList.length - 1].classList.remove('active__list');
                 counterRow.current++;
-                if (counterRow.current >= rusultList.length) {
+                if (counterRow.current >= resultsList.length) {
                     counterRow.current = -1;
                     changeInputDate(counterRow.current, true);
                 }
                 if (resultListArray.current[counterRow.current]) {
                     resultListArray.current[counterRow.current].classList.add('active__list');
-                    changeInputDate(counterRow.current, false, rusultList[counterRow.current].latlng);
+                    changeInputDate(counterRow.current, false, resultsList[counterRow.current].latlng);
                     if (resultListArray.current[counterRow.current].previousSibling) {
                         resultListArray.current[counterRow.current].previousSibling.classList.remove('active__list');
                     }
@@ -88,17 +89,17 @@ const SearchPanel = (props) => {
             if (event.keyCode === 38) {
                 counterRow.current--;
                 if (counterRow.current < -1) {
-                    counterRow.current = rusultList.length - 1;
+                    counterRow.current = resultsList.length - 1;
                     resultListArray.current[0].classList.remove('active__list');
                 }
                 if (counterRow.current === -1) {
                     changeInputDate(counterRow.current, true);
-                    counterRow.current = rusultList.length;
+                    counterRow.current = resultsList.length;
                     resultListArray.current[0].classList.remove('active__list');
                 }
                 if (resultListArray.current[counterRow.current]) {
                     resultListArray.current[counterRow.current].classList.add('active__list');
-                    changeInputDate(counterRow.current, false, rusultList[counterRow.current].latlng);
+                    changeInputDate(counterRow.current, false, resultsList[counterRow.current].latlng);
                     if (resultListArray.current[counterRow.current + 1]) {
                         resultListArray.current[counterRow.current + 1].classList.remove('active__list');
                     }
@@ -112,9 +113,9 @@ const SearchPanel = (props) => {
         let newID = 0;
         let newResultList = [];
         let listSize = 0;
-        for (let i = 0; i < ListForHints.length; i++) {
-            if (ListForHints[i].capital.match(regex) && listSize <= 10) {
-                newResultList.push({ id: newID, text: `${ListForHints[i].capital}` });
+        for (let i = 0; i < listForHints.length; i++) {
+            if (listForHints[i].capital.match(regex) && listSize <= 10) {
+                newResultList.push({ id: newID, text: `${listForHints[i].capital}` });
                 newID++;
                 listSize++;
             }
@@ -133,6 +134,7 @@ const SearchPanel = (props) => {
 
     function focusInput() {
         hitsList.current.classList.add('hintsList');
+        setSelectState(true)
     }
 
     function hideHintsResult(event) {
@@ -140,6 +142,7 @@ const SearchPanel = (props) => {
             hitsList.current.classList.remove('hintsList');
             refInput.current.blur();
         }
+        setSelectState(false)
     }
 
     function apiRequestDate() {
@@ -154,6 +157,7 @@ const SearchPanel = (props) => {
                 } else {
                     props.FunCalcDifferenceTime(commints,enteredText);
                 }
+                setSelectState(false)
             });
     }
 
@@ -167,7 +171,7 @@ const SearchPanel = (props) => {
         }, [enteredText]);
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={UpdateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={updateInput} />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>

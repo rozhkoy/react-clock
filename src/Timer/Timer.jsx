@@ -4,9 +4,9 @@ const TimerC = (props) => {
     return (
         <div className="wrap-timer">
             <div className="timer__section-group">
-                <TimerSectionItem desription={'Hrs'} stateTimer={props.StateTimer} displayedNumber={props.TimerHourse} updateNumber={props.updateHourse} />
+                <TimerSectionItem desription={'Hrs'} stateTimer={props.StateTimer} displayedNumber={props.TimerHours} updateNumber={props.updateHours} />
                 <span className="timer-colon">:</span>
-                <TimerSectionItem desription={'Min'} stateTimer={props.StateTimer} displayedNumber={props.TimerMinut} updateNumber={props.updateMinut} />
+                <TimerSectionItem desription={'Min'} stateTimer={props.StateTimer} displayedNumber={props.TimerMinute} updateNumber={props.updateMinute} />
                 <span className="timer-colon">:</span>
                 <TimerSectionItem desription={'Sec'} stateTimer={props.StateTimer} displayedNumber={props.TimerSecond} updateNumber={props.updateSecond} />
             </div>

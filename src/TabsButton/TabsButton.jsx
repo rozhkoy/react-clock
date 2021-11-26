@@ -21,7 +21,7 @@ const TabsButton = () => {
     const endDate = useRef(0);
     const startDate = useRef(0);
     let calculateMili = {
-        hourse: 0,
+        hours: 0,
         minute: 0,
         second: 0,
         mili: 0,
@@ -49,7 +49,7 @@ const TabsButton = () => {
         setUseOtherTime(true);
     }
 
-    function addCity() {
+    function addCityInList() {
         let add = savedCity.slice();
         add.push({
             id: add.length,
@@ -61,7 +61,7 @@ const TabsButton = () => {
         setSavedCity(add);
     }
 
-    function deleteCity(idElem) {
+    function deleteSavedCity(idElem) {
         let arr = savedCity.slice()
         console.log("before", arr, idElem)
         arr = arr.filter(obj => obj.id !== idElem);
@@ -153,10 +153,10 @@ const TabsButton = () => {
                     timerStop();
                     showMessage('Time is up');
                 }
-                calculateMili.hourse = Math.floor(calculateMili.currentMili / (1000 * 60 * 60))
-                calculateMili.minute = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hourse * 60;
+                calculateMili.hours = Math.floor(calculateMili.currentMili / (1000 * 60 * 60))
+                calculateMili.minute = Math.floor(calculateMili.currentMili / (1000 * 60)) - calculateMili.hours * 60;
                 calculateMili.second = Math.floor(calculateMili.currentMili / 1000) - Math.floor(calculateMili.currentMili / (1000 * 60)) * 60;
-                setTimerHours(calculateMili.hourse);
+                setTimerHours(calculateMili.hours);
                 setTimerMinute(calculateMili.minute);
                 setTimerSecond(calculateMili.second);
             }, 250);
@@ -171,7 +171,7 @@ const TabsButton = () => {
     });
 
     // for timer
-    const updateHourse = function (plusMinus) {
+    const updateHours = function (plusMinus) {
         switch (plusMinus) {
             case 'minus':
                 if (!StateTimer) {
@@ -301,23 +301,25 @@ const TabsButton = () => {
             </div>
 
             {selectTab === 1 &&
-            <Clock addCity={addCity}
+            <Clock
                    calcDifferenceTime={calcDifferenceTime}
-                   savedCity={savedCity}
+                   addCityInList={addCityInList}
                    cityName={cityName}
                    mainTime={mainTime}
-                   deleteCity={deleteCity}
+                   savedCity={savedCity}
+                   deleteSavedCity={deleteSavedCity}
+
                    dateString={dateString}/>}
             {selectTab === 2 &&
             <TimerC StateTimer={StateTimer}
-                    TimerHourse={TimerHours}
-                    TimerMinut={TimerMinute}
+                    TimerHours={TimerHours}
+                    TimerMinute={TimerMinute}
                     TimerSecond={TimerSecond}
                     timerReset={timerReset}
                     timerStop={timerStop}
                     timerStart={timerStart}
-                    updateHourse={updateHourse}
-                    updateMinut={updateMinute}
+                    updateHours={updateHours}
+                    updateMinute={updateMinute}
                     updateSecond={updateSecond}/>}
 
         </div>

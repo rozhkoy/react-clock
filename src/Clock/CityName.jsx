@@ -9,7 +9,7 @@ function CityName(props) {
     return (
     <div className='wrap-city-name'>
             <p className="city-name">{props.cityName}</p>
-            <BttnAdd onClick={props.addCity}/>
+            <BttnAdd onClick={props.addCityInList}/>
         </div>);
 }
 
