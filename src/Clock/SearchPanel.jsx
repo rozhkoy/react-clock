@@ -44,7 +44,7 @@ const SearchPanel = (props) => {
         createHintsList(temporally);
         setEnteredText(temporally);
         counterRow.current = -1;
-        setSelectState(true)
+        setSelectState(true);
     }
 
     function changeInputDate(index, last) {
@@ -133,8 +133,7 @@ const SearchPanel = (props) => {
 
     function focusInput() {
         hitsList.current.classList.add('hintsList');
-        setSelectState(true)
-
+        setSelectState(true);
     }
 
     function hideHintsResult(event) {
@@ -142,7 +141,7 @@ const SearchPanel = (props) => {
             hitsList.current.classList.remove('hintsList');
             refInput.current.blur();
         }
-        setSelectState(false)
+        setSelectState(false);
     }
 
     function apiRequestDate() {
@@ -154,23 +153,31 @@ const SearchPanel = (props) => {
                 if ('ip' in commints.geo) {
                     showMessage('Oops, no such city found');
                 } else {
-                    props.FunCalcDifferenceTime(commints,enteredText);
+                    props.FunCalcDifferenceTime(commints, enteredText);
                 }
-                setSelectState(false)
+                setSelectState(false);
             });
     }
 
-    useEffect(
-        () => {
-            document.addEventListener('mousedown', hideHintsResult);
-            updateHintsList();
-            return () => {
-                document.removeEventListener('mousedown', hideHintsResult);
-            };
-        }, [enteredText]);
+    useEffect(() => {
+        document.addEventListener('mousedown', hideHintsResult);
+        updateHintsList();
+        return () => {
+            document.removeEventListener('mousedown', hideHintsResult);
+        };
+    }, [enteredText]);
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={updateInput} />
+            <input
+                type="text"
+                ref={refInput}
+                onFocus={focusInput}
+                className="search__input"
+                placeholder="Search by city name"
+                onKeyDown={selectionHints}
+                value={enteredText}
+                onChange={updateInput}
+            />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
