@@ -47,6 +47,7 @@ const TabsButton = () => {
 
     function searchBySavedCity(cityName){
             console.log(cityName)
+            searchByCityName(cityName)
     }
 
 
@@ -56,7 +57,10 @@ const TabsButton = () => {
             .then((commints) => {
                 console.log(commints);
                 if ('ip' in commints.geo) {
-                    showMessage('Oops, no such city found');
+                    setCityName('Local time')
+                    setUseOtherTime(false);
+                    setMainTimer(DateTime.local().toFormat('TT').split(':'));
+                    setDateString(DateTime.local().setLocale('en').toFormat('DDDD'));
                 } else {
                     calcDifferenceTime(commints, cityName)
                 }
