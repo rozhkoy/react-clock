@@ -2,9 +2,9 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { countryListObject } from '../App';
 import { ContextPopupMesseges } from '../Wrap/Wrap';
 
-const SaerchPanel = (props) => {
+const SearchPanel = (props) => {
     const ListForHints = useContext(countryListObject);
-    const showMesseges = useContext(ContextPopupMesseges);
+    const showMessage = useContext(ContextPopupMesseges);
     const resultListArray = useRef([]);
     const counterRow = useRef(-1);
     const searchDate = useRef({ enteredText: '' });
@@ -61,7 +61,7 @@ const SaerchPanel = (props) => {
         }
     }
 
-    function hintSelection(event) {
+    function selectionHints(event) {
         // enter
         if (event.keyCode === 13) {
             apiRequestDate();
@@ -135,7 +135,7 @@ const SaerchPanel = (props) => {
         hitsList.current.classList.add('hintsList');
     }
 
-    function hideHintsresult(event) {
+    function hideHintsResult(event) {
         if (!domNode.current.contains(event.target)) {
             hitsList.current.classList.remove('hintsList');
             refInput.current.blur();
@@ -150,7 +150,7 @@ const SaerchPanel = (props) => {
             .then((commints) => {
                 console.log(commints);
                 if ('ip' in commints.geo) {
-                    showMesseges('Oops, no such city found');
+                    showMessage('Oops, no such city found');
                 } else {
                     props.FunCalcDifferenceTime(commints,enteredText);
                 }
@@ -159,17 +159,15 @@ const SaerchPanel = (props) => {
 
     useEffect(
         (event) => {
-            document.addEventListener('mousedown', hideHintsresult);
+            document.addEventListener('mousedown', hideHintsResult);
             updateHintsList();
             return () => {
-                document.removeEventListener('mousedown', hideHintsresult);
+                document.removeEventListener('mousedown', hideHintsResult);
             };
-        },
-        [enteredText]
-    );
+        }, [enteredText]);
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={hintSelection} value={enteredText} onChange={UpdateInput} />
+            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={UpdateInput} />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
@@ -180,4 +178,4 @@ const SaerchPanel = (props) => {
     );
 };
 
-export default SaerchPanel;
+export default SearchPanel;
