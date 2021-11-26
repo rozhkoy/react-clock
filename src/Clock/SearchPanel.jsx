@@ -152,7 +152,7 @@ const SearchPanel = (props) => {
                 if ('ip' in commints.geo) {
                     showMessage('Oops, no such city found');
                 } else {
-                    props.FunCalcDifferenceTime(commints,enteredText);
+                    props.FunCalcDifferenceTime(commints, enteredText);
                 }
             });
     }
@@ -164,10 +164,21 @@ const SearchPanel = (props) => {
             return () => {
                 document.removeEventListener('mousedown', hideHintsResult);
             };
-        }, [enteredText]);
+        },
+        [enteredText]
+    );
     return (
         <div className="search" ref={domNode}>
-            <input type="text" ref={refInput} onFocus={focusInput} className="search__input" placeholder="Search by city name" onKeyDown={selectionHints} value={enteredText} onChange={UpdateInput} />
+            <input
+                type="text"
+                ref={refInput}
+                onFocus={focusInput}
+                className="search__input"
+                placeholder="Search by city name"
+                onKeyDown={selectionHints}
+                value={enteredText}
+                onChange={UpdateInput}
+            />
             <button className="search__bttn" onClick={apiRequestDate}>
                 Search
             </button>
