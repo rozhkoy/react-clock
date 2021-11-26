@@ -67,7 +67,7 @@ const TabsButton = () => {
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
         dataDate.current = {};
-        dataDate.current.difference = Math.floor((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
+        dataDate.current.difference = Math.round((new Date() - new Date(dateObject.date_time_txt)) / (1000 * 60 * 60));
         dataDate.current.fullDate = dateObject.date_time_txt;
         setUseOtherTime(true);
     }
@@ -138,7 +138,6 @@ const TabsButton = () => {
 
     useEffect(() => {
         let timer;
-
         timer = setInterval(() => {
             uppDataDateInSavedCity()
             if (useOtherTime) {

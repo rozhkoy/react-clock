@@ -12,7 +12,7 @@ const SearchPanel = (props) => {
     const hitsList = useRef(null);
     const [selectState, setSelectState] = useState(true);
     const [resultsList, setResultList] = useState([
-        {id: 0, text: 'Kiev'},
+        {id: 0, text: 'Kyiv'},
         {id: 1, text: 'Minsk'},
         {id: 2, text: 'Tokyo'},
         {id: 3, text: 'Moscow'},
@@ -151,6 +151,7 @@ const SearchPanel = (props) => {
         fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${enteredText}`)
             .then((response) => response.json())
             .then((commints) => {
+                console.log(commints)
                 if ('ip' in commints.geo) {
                     showMessage('Oops, no such city found');
                 } else {
