@@ -10,7 +10,7 @@ const SavedTimeZones = (props) => {
                                     onClick={() => props.deleteSavedCity(item.id)}>&#x2715;</button>
                         </div>
                         <div className="second-level"
-                             onClick={() => props.searchBySavedCity(item.city)}>{item.city}</div>
+                             onClick={() => props.searchBySavedCity(item.city, item.difference, item.dataInString)}>{item.city}</div>
                         <div className="third-level">{item.dateTime}</div>
                     </li>)
                 )

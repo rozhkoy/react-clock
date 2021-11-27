@@ -41,28 +41,23 @@ const TabsButton = () => {
 
 
     function comebackHouse() {
-        searchByCityName(" ")
+        dataDate.current = {};
+        dataDate.current.difference = 0;
+        dataDate.current.fullDate = DateTime.local().setLocale('en').toFormat('DDDD') ;
+        setCityName('local time');
+
     }
 
-    function searchBySavedCity(cityName) {
-        searchByCityName(cityName)
+    function searchBySavedCity(cityName , diff, dataInString) {
+        dataDate.current = {};
+        dataDate.current.difference = diff;
+        dataDate.current.fullDate = dataInString;
+        setCityName(cityName);
+        console.log(dataDate.current)
     }
 
 
-    function searchByCityName(cityName) {
-        fetch(`https://api.ipgeolocation.io/timezone?apiKey=1951161faacc41268be75b771f166a97&location=${cityName}`)
-            .then((response) => response.json())
-            .then((commints) => {
-                if ('ip' in commints.geo) {
-                    setCityName('Local time')
-                    setUseOtherTime(false);
-                    setMainTimer(DateTime.local().toFormat('TT').split(':'));
-                    setDateString(DateTime.local().setLocale('en').toFormat('DDDD'));
-                } else {
-                    calcDifferenceTime(commints, cityName)
-                }
-            });
-    }
+
 
     function calcDifferenceTime(dateObject, name) {
         setCityName(name);
@@ -78,7 +73,8 @@ const TabsButton = () => {
             id: add.length,
             city: cityName,
             difference: dataDate.current.difference,
-            dateTime: DateTime.local().toFormat('T')
+            dateTime: DateTime.local().toFormat('T'),
+            dataInString: dateString
         })
 
         setSavedCity(add);
@@ -161,7 +157,7 @@ const TabsButton = () => {
             } else {
                 setMainTimer(DateTime.local().toFormat('TT').split(':'));
             }
-        }, 1000)
+        }, 500)
 
         if (StateTimer) {
             timerInterval = setInterval(() => {
